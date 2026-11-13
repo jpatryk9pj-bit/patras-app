@@ -271,6 +271,80 @@ section.page#body .pillar-hero p{font-size:12px;max-width:340px}
  #progress .recovery-card,#progress>.card{padding:12px}
 }
 
+
+/* PATRAS — unified expedition interface, home + five pillars */
+#home .home-cover{min-height:470px;border-radius:9px;border-color:#34413b;padding:17px;background-position:center 45%;box-shadow:0 18px 45px #0004}
+#home .home-topline{align-items:center}
+#home .home-live{font-size:8px;letter-spacing:1.2px;padding:6px 8px;border:1px solid #ffffff45;background:#08100d80;border-radius:3px}
+#home .home-copy{padding:110px 0 18px}
+#home .home-copy .eyebrow{font-size:9px;letter-spacing:2.5px}
+#home .home-copy h1{font-size:clamp(39px,9.6vw,58px);letter-spacing:-2.2px;line-height:.9;margin:9px 0}
+#home .home-copy p{font-size:10px;letter-spacing:1.7px}
+#home .home-tags{gap:6px}
+#home .home-tags span{font-size:8px;letter-spacing:1.2px;padding:5px 8px;border-radius:3px}
+#home .home-bottom{padding-top:11px}
+#home .home-bottom strong{font-size:48px}
+#home .home-bottom>div:first-child span{font-size:9px;letter-spacing:.7px}
+#home .home-day{font-size:8px}
+#home .home-day b{font-size:14px}
+#home .home-mission{padding:13px 0;margin:0 0 10px}
+#home .mission-name{font-size:14px;letter-spacing:-.2px}
+#home .mission-go{width:36px;height:36px;font-size:26px;border-radius:5px}
+#home .home-stats{gap:7px;margin:8px 0 20px}
+#home .home-stat{padding:10px 9px;border-radius:6px;background:#11171b;border-color:#2a3539}
+#home .home-stat span{font-size:8px;letter-spacing:.9px}
+#home .home-stat b{font-size:20px}
+#home .home-workout{border-radius:8px;background:#11171b;border-color:#2b363a}
+#home .home-workout .btn{font-size:10px}
+#home .section-head{margin:18px 0 10px}
+#home .section-head h2{font-size:21px}
+#body .pillar-hero,#mind .pillar-hero,#mission .pillar-hero,#growth .pillar-hero{min-height:230px;padding:22px 18px;border-radius:8px;border-color:#34413b;background-image:linear-gradient(0deg,rgba(4,8,9,.95),rgba(4,8,9,.16)),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp');background-size:cover}
+#body .pillar-hero h1,#mind .pillar-hero h1,#mission .pillar-hero h1,#growth .pillar-hero h1{font-size:clamp(37px,9vw,51px);line-height:.92;letter-spacing:-1.8px;margin:8px 0}
+#body .pillar-hero p,#mind .pillar-hero p,#mission .pillar-hero p,#growth .pillar-hero p{font-size:11px;line-height:1.55;max-width:350px}
+#body .pillar-grid{gap:8px}
+#body .pillar-card{border-radius:7px;background:#11171b;border-color:#2b363a}
+#mind .grid,#growth .grid,#mountain .grid{gap:8px;margin:12px 0}
+#mind .grid .card,#growth .grid .card,#mountain .grid .card{border-radius:8px;background:#11171b;border-color:#2b363a;padding:14px}
+#mind .grid h3,#growth .grid h3,#mountain .grid h3{font-size:14px}
+#mind .grid p,#growth .grid p,#mountain .grid p{font-size:10px;line-height:1.55}
+#mind>.card,#growth>.card,#mountain>.card{border-radius:8px;background:#11171b;border-color:#2b363a;padding:15px;box-shadow:none}
+#mind>.card h2{font-size:21px}
+#mind .note{font-size:10px}
+#mountain .hero{min-height:220px;padding:22px 18px;border-radius:8px;background-image:linear-gradient(0deg,rgba(4,8,9,.94),rgba(4,8,9,.24)),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp');background-size:cover;background-position:center 48%}
+#mountain .hero h1{font-size:clamp(36px,8vw,50px)}
+#mountain .hero p{font-size:11px;line-height:1.55}
+#mountain .photo-feature{border-radius:8px;min-height:210px}
+#mountain .photo-feature img{height:245px}
+#mountain .photo-caption{border-radius:8px;background:#11171b;border-color:#2b363a}
+#mountain .photo-caption p{font-size:10px;line-height:1.55}
+#mountain .expedition-grid{gap:8px}
+#mountain .expedition-grid label{font-size:10px}
+#mountain input,#mountain textarea{font-size:13px}
+#mission .mission-panel{border:1px solid #2b363a;background:#11171b;border-radius:8px;padding:16px}
+#mission .mission-panel h2{font-size:clamp(20px,5vw,26px);letter-spacing:-.5px}
+#mission .mission-panel .bar{margin:14px 0 9px}
+#mission>.card{border-radius:8px;background:#11171b;border-color:#2b363a;padding:15px}
+#mission .task{padding:12px 0;border-color:#283338}
+#mission .task b,#growth .task b{font-size:12px}
+#mission .task .small,#growth .task .small{font-size:10px;line-height:1.5}
+#growth .grid .metric{font-size:27px}
+#growth>.card h3{font-size:15px}
+#growth .task{padding:12px 0;border-color:#283338}
+@media(min-width:700px){
+ #home .home-cover{min-height:540px;padding:25px}
+ #home .home-copy{padding-top:145px}
+ #body .pillar-hero,#mind .pillar-hero,#mission .pillar-hero,#growth .pillar-hero{min-height:290px;padding:30px}
+ #body .pillar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #mountain .photo-wall{grid-template-columns:1.35fr 1fr}
+}
+@media(max-width:390px){
+ #home .home-cover{min-height:440px;padding:14px}
+ #home .home-copy{padding-top:95px}
+ #home .home-bottom strong{font-size:43px}
+ #body .pillar-hero,#mind .pillar-hero,#mission .pillar-hero,#growth .pillar-hero{min-height:210px;padding:18px 15px}
+ #mountain .hero{min-height:205px;padding:18px 15px}
+}
+
 </style>
 </head>
 <body>
