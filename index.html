@@ -73,12 +73,19 @@ input,select,textarea{border-radius:4px!important}
 .home-topline{display:flex;justify-content:space-between;gap:8px;align-items:center}.home-live{font-size:9px;letter-spacing:1px;color:#d8e2d7}.home-copy{padding:140px 0 20px}.home-copy h1{font-size:clamp(38px,9vw,62px);line-height:.92;letter-spacing:-1.8px;font-weight:950;margin:8px 0}.home-copy p{font-size:12px;letter-spacing:1.4px;font-weight:800;color:#e4e9e3}.home-tags{display:flex;gap:7px;margin-top:14px}.home-tags span{font-size:9px;letter-spacing:1.5px;border:1px solid #ffffff70;background:#09110e88;padding:6px 9px;color:#f1f5ed}.home-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #ffffff55;padding-top:13px}.home-bottom>div:first-child{display:flex;align-items:center;gap:9px}.home-bottom strong{font-size:54px;line-height:1;color:var(--lime);letter-spacing:-3px}.home-bottom>div:first-child span{font-size:10px;line-height:1.2;font-weight:850}.home-day{width:48%;font-size:9px;letter-spacing:1px}.home-day b{display:block;font-size:15px;letter-spacing:0}.home-day .bar{height:5px;margin:5px 0}.home-day small{color:var(--lime)}.home-mission{display:flex;align-items:center;justify-content:space-between;padding:15px 2px;border-bottom:1px solid var(--line);margin-bottom:12px}.mission-name{font-weight:850;font-size:16px;margin:3px 0}.mission-go{width:40px;height:40px;border:0;border-radius:50%;background:var(--lime);color:#10150a;font-size:30px;line-height:1}.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 24px}.home-stat{padding:12px;background:#111820;border:1px solid #293640}.home-stat span{display:block;font-size:9px;letter-spacing:1px;color:var(--muted)}.home-stat b{font-size:22px;color:var(--lime)}.home-stat b small{font-size:10px;color:var(--muted)}.home-workout{border-radius:5px}
 @media(min-width:700px){.home-cover{min-height:560px}.home-copy{padding-top:180px}.home-cover{background-position:center 43%}}
 @media(max-width:390px){.home-cover{min-height:470px;padding:14px}.home-copy{padding-top:110px}.home-bottom strong{font-size:46px}}
+
+/* Five-pillar navigation and hub pages */
+.nav{justify-content:space-around;gap:3px;padding-left:8px;padding-right:8px}.nav button{max-width:none;flex:1;font-size:9px;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:7px 2px}.nav button b{font-size:19px;margin-bottom:2px}.nav button.active{box-shadow:inset 0 -2px var(--lime);background:#c8f1690b}
+.pillar-hero{min-height:280px;position:relative;overflow:hidden;padding:25px 20px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid #3c4941;background:linear-gradient(0deg,rgba(4,8,9,.96),rgba(4,8,9,.12)),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp') center/cover}
+.pillar-hero h1{font-size:clamp(39px,9vw,58px);line-height:.92;margin:10px 0}.pillar-hero p{max-width:440px;color:#d3ddd5;font-size:13px}.body-hero{background-position:center 43%}.mission-hero{background-position:center 60%}.growth-hero{background-position:center 40%}
+.pillar-grid{display:grid;gap:9px;margin:14px 0}.pillar-card{position:relative;text-align:left;padding:17px 52px 17px 15px;border:1px solid #34413c;background:linear-gradient(130deg,#17221f,#10171b);color:var(--text);border-radius:4px;min-height:98px}.pillar-card span{display:block;color:var(--lime);font-size:9px;letter-spacing:1.5px}.pillar-card b{display:block;font-size:17px;margin:4px 0}.pillar-card small{display:block;color:var(--muted);font-size:11px}.pillar-card i{position:absolute;right:17px;top:35px;font-size:24px;color:var(--lime);font-style:normal}.mission-panel{margin-top:14px;border-radius:4px}.mission-panel h2{font-size:24px;margin:7px 0}.mission-panel .bar{margin:12px 0}
+@media(min-width:700px){.pillar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.pillar-card{min-height:150px}.pillar-card i{top:auto;bottom:15px}}
 </style>
 </head>
 <body>
 <header><div class="wrap top"><div><div class="brand">PATRAS<span>.</span></div><div class="tag">WILD EXPEDITION · MAKE EVERY DAY COUNT</div></div><div class="small" id="today"></div></div></header>
 <div class="nav" role="navigation" aria-label="Główna nawigacja">
-<button class="active" data-page="home"><b>⌂</b>Start</button><button data-page="plan"><b>▦</b>Plan</button><button data-page="food"><b>◉</b>Odżywianie</button><button data-page="progress"><b>↗</b>Postępy</button><button data-page="mountain"><b>△</b>Góry</button>
+<button class="active" data-page="home"><b>⌂</b>Start</button><button data-page="body"><b>◉</b>Body</button><button data-page="mountain"><b>△</b>Mountain</button><button data-page="mission"><b>⚑</b>Mission</button><button data-page="growth"><b>↗</b>Growth</button>
 </div>
 <main class="wrap">
 <section class="page active" id="home">
@@ -96,6 +103,15 @@ input,select,textarea{border-radius:4px!important}
 <div class="section-head"><div><div class="eyebrow">Dzisiaj</div><h2>Twoja misja dnia</h2></div><span class="badge" id="todayLabel">START</span></div>
 <div class="card home-workout"><div id="todayWorkout"></div><div class="actions" style="margin-top:12px"><button class="btn primary" onclick="go('plan')">ROZPOCZNIJ TRENING&nbsp; →</button><button class="btn" onclick="resetToday()">Reset dnia</button></div></div>
 <div class="note">Plan jest bazowym programem ogólnorozwojowym, a nie oficjalnym programem selekcyjnym SPKP. Obciążenia dobieraj do techniki i aktualnej dyspozycji.</div>
+</section>
+<section class="page" id="body">
+<div class="pillar-hero body-hero"><div class="eyebrow">PILLAR 01 · BODY</div><h1>BUILD YOUR<br>ENGINE.</h1><p>Siła, kondycja, odżywianie i regeneracja. Jedno centrum przygotowania do górskiego celu.</p></div>
+<div class="pillar-grid">
+<button class="pillar-card" onclick="go('plan')"><span>01 / TRAINING</span><b>Plan 24 tygodnie</b><small>168 dni przygotowań · treningi i testy</small><i>↗</i></button>
+<button class="pillar-card" onclick="go('food')"><span>02 / NUTRITION</span><b>Odżywianie</b><small>Posiłki, energia i makroskładniki</small><i>↗</i></button>
+<button class="pillar-card" onclick="go('progress')"><span>03 / BODY LAB</span><b>Pomiary i postępy</b><small>Wyniki, masa ciała i historia</small><i>↗</i></button>
+</div>
+<div class="note">Twój dotychczasowy program treningowy pozostaje bez zmian. Zmieniamy sposób dostępu i prezentacji, nie zawartość planu.</div>
 </section>
 <section class="page" id="plan">
 <div class="section-head"><div><div class="eyebrow">Systematyczna progresja</div><h2>Plan treningowy — 24 tygodnie</h2></div></div>
@@ -129,7 +145,18 @@ input,select,textarea{border-radius:4px!important}
 </div>
 <div class="grid"><div class="card"><h3>Przygotowanie</h3><p class="small">Buty, warstwy odzieży, woda, jedzenie, mapa offline i prognoza pogody.</p></div><div class="card"><h3>Progres</h3><p class="small">Notuj czas marszu, przewyższenie, dystans i samopoczucie.</p></div></div>
 <div class="card"><h3>Checklista wyprawy</h3><div id="mountainTasks"></div></div><div class="card" style="margin-top:12px"><h3>Dziennik wypraw</h3><div class="expedition-grid"><div class="wide"><label class="small" for="tripName">Nazwa wyprawy / szczytu</label><input id="tripName" type="text" placeholder="np. Pic de Coma Pedrosa"></div><div><label class="small" for="tripDate">Data</label><input id="tripDate" type="date"></div><div><label class="small" for="tripDistance">Dystans (km)</label><input id="tripDistance" type="number" min="0" step=".1" placeholder="np. 14.5"></div><div><label class="small" for="tripGain">Przewyższenie (m)</label><input id="tripGain" type="number" min="0" step="1" placeholder="np. 1200"></div><div><label class="small" for="tripTime">Czas (godz.)</label><input id="tripTime" type="number" min="0" step=".1" placeholder="np. 6.5"></div><div class="wide"><label class="small" for="tripNote">Notatki</label><textarea id="tripNote" rows="2" placeholder="Warunki, trudności, sprzęt, wnioski..."></textarea></div></div><button class="btn primary" style="margin-top:10px" onclick="saveExpedition()">Zapisz wyprawę</button><div id="expeditionList" style="margin-top:12px"></div></div>
+</section><section class="page" id="mission">
+<div class="pillar-hero mission-hero"><div class="eyebrow">PILLAR 04 · MISSION</div><h1>ONE GOAL.<br>EVERY DAY.</h1><p>Codzienne zadania, kamienie milowe i przygotowanie do najbliższej wyprawy.</p></div>
+<div class="card mission-panel"><div class="eyebrow">MAIN OBJECTIVE</div><h2>PIC DE COMA PEDROSA</h2><p class="small">Andora · 2 942 m · główny cel wyprawy</p><div class="bar"><i style="width:0%"></i></div><div class="small">Przygotowanie wyprawy — postęp będzie uzupełniany na podstawie wykonanych zadań.</div></div>
+<div class="section-head"><div><div class="eyebrow">DAILY SYSTEM</div><h2>Misja dnia</h2></div></div>
+<div class="card"><div class="task"><span>◉</span><div><b>Wykonaj zaplanowany trening</b><div class="small">Przejdź do BODY i otwórz aktualny dzień programu.</div></div></div><div class="task"><span>△</span><div><b>Zadbaj o przygotowanie górskie</b><div class="small">Sprawdź checklistę i sprzęt w zakładce MOUNTAIN.</div></div></div><div class="task"><span>↗</span><div><b>Zapisz wynik</b><div class="small">Uzupełnij pomiary i postępy w BODY LAB.</div></div></div></div>
 </section>
+<section class="page" id="growth">
+<div class="pillar-hero growth-hero"><div class="eyebrow">PILLAR 05 · GROWTH</div><h1>MEASURE.<br>LEARN. GROW.</h1><p>Rozwój oparty na danych: regularność, wyniki, zdobyte szczyty i kolejne etapy przygotowań.</p></div>
+<div class="grid"><div class="card"><div class="small">PROGRAM</div><div class="metric">24 <span>tygodnie</span></div><div class="small">168 dni konsekwencji</div></div><div class="card"><div class="small">GŁÓWNY CEL</div><div class="metric">2 942 <span>m</span></div><div class="small">Pic de Coma Pedrosa</div></div></div>
+<div class="card"><h3>Twoje kolejne kroki</h3><div class="task"><span>01</span><div><b>Regularność</b><div class="small">Realizuj kolejne jednostki programu.</div></div></div><div class="task"><span>02</span><div><b>Analiza</b><div class="small">Obserwuj postępy w BODY LAB.</div></div></div><div class="task"><span>03</span><div><b>Gotowość</b><div class="small">Buduj formę i doświadczenie górskie.</div></div></div></div>
+</section>
+
 </main>
 <script>
 const $=id=>document.getElementById(id);
@@ -272,7 +299,7 @@ function weekData(w){
 }
 let currentWeek=1;
 function save(){localStorage.setItem(STORAGE,JSON.stringify(state));refreshStats()}
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan()}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));const parent=['plan','food','progress'].includes(id)?'body':id;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===parent));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan()}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function renderWeeks(){ $('weeks').innerHTML=Array.from({length:24},(_,i)=>`<button class="week ${currentWeek===i+1?'active':''}" onclick="currentWeek=${i+1};renderPlan()">T${i+1}</button>`).join('')}
 function renderPlan(){renderWeeks();$('weekNo').textContent=currentWeek;$('weekTitle').textContent=currentWeek===24?'Finisz i sprawdzenie':phases[Math.min(7,Math.floor((currentWeek-1)/3))];$('phase').textContent=`Etap: ${$('weekTitle').textContent}. ${[4,8,12,16,20,23].includes(currentWeek)?'Tydzień lżejszy — zmniejsz objętość o około 30–40%.':'Zwiększaj obciążenie tylko wtedy, gdy technika i regeneracja są dobre.'}`;
