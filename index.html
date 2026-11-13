@@ -88,6 +88,63 @@ input,select,textarea{border-radius:4px!important}
 
 /* FOOD LAB premium dashboard */
 .food-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px;border:1px solid #465543;background:linear-gradient(120deg,#1c2924,#10171a 72%);border-radius:18px;margin:12px 0}.food-kcal{display:flex;align-items:baseline;gap:8px;margin:4px 0}.food-kcal strong{font-size:clamp(42px,10vw,62px);line-height:1;font-weight:900;letter-spacing:-3px}.food-kcal span{color:var(--lime);font-weight:800}.food-ring{width:104px;height:104px;flex:0 0 104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--lime) var(--progress,0%),#354039 0);position:relative}.food-ring:before{content:"";position:absolute;inset:8px;border-radius:50%;background:#15201b}.food-ring div{position:relative;text-align:center;display:grid}.food-ring b{font-size:20px}.food-ring span,.macro-top span,.food-target-grid span{font-size:9px;letter-spacing:1.4px;color:var(--muted);font-weight:800}.food-macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0 16px}.macro-card{padding:12px;background:#111820;border:1px solid var(--line);border-radius:13px;min-width:0}.macro-top{display:grid;gap:5px}.macro-top b{font-size:13px}.macro-card .bar{height:5px;margin:9px 0 0}.food-targets{margin:14px 0}.food-card-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.food-target-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:16px 0 8px}.food-target-grid div{padding:10px 8px;background:#0c1217;border-radius:10px;display:grid;gap:4px}.food-target-grid b{font-size:17px}.food-target-form,.food-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.food-target-form[hidden]{display:none}.food-target-form label,.food-form label{display:block;font-size:11px;color:var(--muted);margin:0 0 5px}.food-target-form .wide,.food-form .wide{grid-column:1/-1}.food-meals-head{margin-top:25px}.food-add{border-color:#45543d;background:linear-gradient(145deg,#151e1a,#111820)}.food-meal{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.food-meal:last-child{border:0}.food-meal strong{font-size:13px}.food-meal .small{margin-top:3px}.food-meal-right{text-align:right;white-space:nowrap}.food-meal-right b{display:block;font-size:15px}.food-meal-right button{margin-top:4px}.food-history{margin-top:14px}.food-history-row{padding:10px 0;border-bottom:1px solid var(--line)}.food-history-row:last-child{border:0}@media(max-width:390px){.food-hero{padding:17px}.food-ring{width:88px;height:88px;flex-basis:88px}.food-target-grid{gap:5px}.food-target-grid div{padding:8px 5px}.food-target-grid b{font-size:14px}.food-macros{gap:6px}.macro-card{padding:9px 7px}.macro-top b{font-size:11px}}@media(min-width:700px){.food-hero{padding:28px 34px}.food-form{grid-template-columns:repeat(4,minmax(0,1fr))}.food-form .wide{grid-column:span 2}.food-form button.wide{grid-column:1/-1}}
+
+/* PATRAS UI refinement — BODY / training, mobile-first */
+:root{--bg:#090c0f;--panel:#12181d;--panel2:#182127;--line:#293238;--text:#f3f5f1;--muted:#9aa4a6;--lime:#c8f169}
+body{background:var(--bg);background-image:none;padding-bottom:76px}
+main{padding-top:20px}
+header{background:rgba(8,11,13,.96);border-bottom-color:#242d31}
+.top{height:68px}
+.tag{letter-spacing:2.2px}
+section.page#body .pillar-hero{min-height:220px;padding:22px 18px;background-image:linear-gradient(0deg,rgba(4,8,9,.94),rgba(4,8,9,.22)),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp');background-position:center 43%;border-color:#303b3b}
+section.page#body .pillar-hero h1{font-size:clamp(38px,9vw,52px);margin:8px 0}
+section.page#body .pillar-hero p{font-size:12px;max-width:340px}
+#body .pillar-grid{gap:8px;margin:12px 0}
+#body .pillar-card{min-height:76px;padding:12px 42px 12px 13px;background:#11171b;border:1px solid #2b3539;border-radius:7px}
+#body .pillar-card span{font-size:8px;letter-spacing:1.2px}
+#body .pillar-card b{font-size:15px;margin:2px 0}
+#body .pillar-card small{font-size:10px}
+#body .pillar-card i{right:13px;top:25px;font-size:20px}
+#body .note{margin-top:12px}
+#plan .plan-hero{min-height:190px;padding:20px 18px;margin-bottom:20px;border-radius:8px;background-position:center 52%}
+#plan .plan-hero h1{font-size:clamp(35px,8vw,48px);margin:7px 0}
+#plan .plan-hero p{font-size:12px;max-width:340px;margin:6px 0}
+#plan .plan-hero-meta{gap:18px;padding-top:9px;margin-top:8px}
+#plan .plan-hero-meta b{font-size:18px}
+#plan .section-head{margin:18px 0 11px;align-items:center}
+#plan .section-head h2{font-size:22px;margin:3px 0 0}
+#plan .plan-selector{padding:14px;background:#10161a;border:1px solid #2b3539;border-radius:8px;box-shadow:none}
+#plan .plan-selector>.small{font-size:9px;letter-spacing:1.3px;font-weight:800;color:#aeb8b6}
+#plan .week-list{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:10px 0}
+#plan .week{height:42px;min-height:42px;padding:0;border-radius:5px;background:#151d21;border:1px solid #303b40;color:#aeb8b6;font-size:12px;font-weight:750}
+#plan .week.active{background:var(--lime);border-color:var(--lime);color:#11170b;box-shadow:0 3px 12px #c8f16920}
+#plan .phase-track{gap:4px;margin:10px 0 8px}
+#plan .phase-track span{padding:5px 2px;font-size:7px;letter-spacing:.5px;background:#1b2525;border-top:2px solid #526044}
+#plan #phase{font-size:11px;line-height:1.45;color:#aeb8b6}
+#plan #weekNo{color:var(--lime)}
+#plan #days .day{border-radius:7px;background:#11181c;border-color:#2c373b;padding:14px;margin:8px 0}
+#plan #days .day-top{align-items:flex-start}
+#plan #days .day-name{font-size:14px}
+#plan #days .exercise{padding:10px 0}
+#plan .card{border-radius:7px;box-shadow:none}
+.nav{padding-top:5px;padding-bottom:calc(5px + env(safe-area-inset-bottom));background:rgba(9,13,15,.98);border-top-color:#293238;gap:2px}
+.nav button{padding:6px 2px;font-size:8px;letter-spacing:.8px}
+.nav button b{font-size:17px;margin-bottom:1px}
+.nav button.active{background:#c8f1690a;box-shadow:inset 0 -2px var(--lime)}
+@media(min-width:700px){
+ #body .pillar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #body .pillar-card{min-height:120px;padding:16px}
+ #body .pillar-card i{top:auto;bottom:12px}
+ #plan .plan-hero{min-height:245px;padding:28px}
+ #plan .week-list{grid-template-columns:repeat(12,minmax(0,1fr))}
+}
+@media(max-width:390px){
+ #plan .week-list{gap:5px}
+ #plan .week{height:39px;min-height:39px;font-size:11px}
+ #plan .plan-selector{padding:12px}
+ .nav button{font-size:7px}
+}
+
 </style>
 </head>
 <body>
