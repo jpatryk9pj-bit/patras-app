@@ -82,22 +82,137 @@ const STORAGE='patras_app_v2';
 let state={checks:{},logs:[],exercisePlans:{},workoutLogs:{},expeditions:[],programStart:new Date().toISOString().slice(0,10)};
 try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){};state.exercisePlans=state.exercisePlans||{};state.checks=state.checks||{};state.logs=state.logs||[];state.workoutLogs=state.workoutLogs||{};state.expeditions=state.expeditions||[];state.programStart=state.programStart||new Date().toISOString().slice(0,10);
 const days=['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
-const phases=['Fundament','Fundament','Budowanie','Budowanie','Siła i wytrzymałość','Siła i wytrzymałość','Wydolność','Wydolność'];
+const phases=['Fundament ruchowy','Budowanie bazy','Rozwój siły','Rozwój wydolności','Wytrzymałość górska','Specyfika wysiłku','Konsolidacja','Taper i test'];
+const deloadWeeks=[4,8,12,16,20,23];
+const upperA=[
+ ['Wyciskanie hantli na ławce','Wiosłowanie hantlą jednorącz','Pompki klasyczne','Ściąganie drążka wyciągu','Face pull','Dead bug'],
+ ['Wyciskanie hantli skos dodatni','Wiosłowanie siedząc na wyciągu','Pompki na podwyższeniu','Ściąganie drążka chwytem neutralnym','Unoszenie ramion bokiem','Pallof press'],
+ ['Wyciskanie na maszynie','Wiosłowanie klatką o ławkę','Pompki z pauzą','Podciąganie z gumą / wyciąg','Odwrotne rozpiętki','Plank shoulder tap'],
+ ['Wyciskanie hantli chwyt neutralny','Wiosłowanie półsztangą','Pompki wąskie na podwyższeniu','Ściąganie drążka szeroko','Y-raise','Hollow hold']
+];
+const lowerA=[
+ ['Goblet squat','Martwy ciąg rumuński hantlami','Step-up niski','Most biodrowy','Wspięcia na palce','Bird dog'],
+ ['Przysiad do ławki','Martwy ciąg kettlebell z podwyższenia','Wykrok w tył z podparciem','Hip thrust','Wspięcia siedząc','Side plank'],
+ ['Przysiad goblet z pauzą','RDL jednonóż z podparciem','Wejście na skrzynię','Uginanie nóg na maszynie','Tibialis raise','Dead bug'],
+ ['Przysiad na suwnicy','Pull-through na wyciągu','Split squat płytki','Glute bridge jednonóż','Wspięcia na palce','Pallof press']
+];
+const mobilitySets=[
+ ['Cat-cow','Open book','Mobilizacja skokowego przy ścianie','90/90 biodra','Oddech przeponowy'],
+ ['Rotacje piersiowego w klęku','Rozciąganie zginaczy biodra','Ankle rocks','Dead bug oddechowy','Spokojny spacer'],
+ ['Thread the needle','Pozycja gołębia w wersji łagodnej','Krążenia bioder','Wall slides','Oddech 4–6'],
+ ['Child pose z oddechem','Mobilizacja łydki','Adductor rockback','Rotacje szyi i barków','Spacer regeneracyjny']
+];
+const swimSets=[
+ ['6×25 m kraul technicznie','4×25 m grzbiet','4×25 m spokojny kraul'],
+ ['8×25 m kraul z długim wydechem','4×25 m nogi z deską','4×25 m grzbiet'],
+ ['4×50 m kraul spokojnie','4×25 m grzbiet','4×25 m technika chwytu'],
+ ['6×50 m naprzemiennie kraul/grzbiet','4×25 m nogi','2×25 m bardzo lekko']
+];
+const hikeSets=[
+ ['Marsz po płaskim','Ćwiczenie równowagi jednonóż','Mobilizacja łydki'],
+ ['Marsz z krótkimi podejściami','Step-up bez obciążenia','Ćwiczenie zejścia kontrolowanego'],
+ ['Marsz terenowy z kijkami opcjonalnie','Wchodzenie po schodach spokojnie','Stabilizacja stopy'],
+ ['Marsz po pagórkach','Step-down z niskiego stopnia','Ćwiczenie równowagi']
+];
+function ex(name,sets,reps,rest='60–90 s',notes='RPE 6–7; zostaw 2–4 powtórzenia w zapasie. Technika ważniejsza niż ciężar.'){return {name,sets,reps,rest,notes}}
 function weekData(w){
- const deload=[4,8,12,16,20,23].includes(w);
- const run=w<=4?'6 × (1 min trucht / 2 min marsz)':w<=8?`${6+Math.floor((w-5)/2)} × (2–3 min trucht / 2 min marsz)`:w<=12?'5–6 × (5–8 min bieg / 2 min marsz)':w<=16?'20–25 min spokojnego biegu':w<=20?'25–30 min spokojnego biegu + krótkie przyspieszenia':w===24?'30–35 min spokojnie; test 12 min opcjonalnie':'25–30 min spokojnego biegu';
- const swim=w<=4?'8 × 25 m':w<=8?'10 × 25 m':w<=12?'6 × 50 m':w<=16?'8 × 50 m':w<=20?'4 × 100 m':'do 200 m ciągiem';
- const walk=w<=4?'45–60 min':w<=8?'60 min':w<=12?'60–75 min':'75–120 min';
- const sets=deload?2:w<=4?2:3;
- const ex=(name,sets,reps,rest='60–90 s',notes='Ruch kontrolowany; zostaw 2–4 powtórzenia w zapasie')=>({name,sets,reps,rest,notes});
+ const deload=deloadWeeks.includes(w),phase=Math.min(7,Math.floor((w-1)/3)),rotation=(w-1)%4;
+ const strengthSets=deload?2:(w<=4?2:w<=12?3:w<=20?3:2);
+ const upper=upperA[rotation],lower=lowerA[(rotation+(w>12?1:0))%4];
+ const runPlan=[
+ '6×(1 min trucht / 2 min marsz)',
+ '7×(1 min trucht / 2 min marsz)',
+ '6×(90 s trucht / 2 min marsz)',
+ 'Lekki marsz 35 min + 6 krótkich odcinków truchtu',
+ '6×(2 min bieg / 2 min marsz)',
+ '7×(2 min bieg / 90 s marsz)',
+ '5×(3 min bieg / 2 min marsz)',
+ 'Marsz 30 min + 4×1 min bardzo lekki trucht',
+ '5×(4 min bieg / 2 min marsz)',
+ '6×(4 min bieg / 90 s marsz)',
+ '4×(6 min bieg / 2 min marsz)',
+ 'Bieg/marsz 25 min bardzo spokojnie',
+ '3×(8 min bieg / 2 min marsz)',
+ '20 min ciągłego biegu w tempie rozmowy',
+ '22 min ciągłego biegu + 4×15 s luźne przebieżki',
+ 'Bieg/marsz 20 min, pełen luz',
+ '25 min ciągłego biegu',
+ '3×(7 min bieg / 2 min marsz) + schłodzenie',
+ '28 min spokojnego biegu',
+ 'Bieg 22 min regeneracyjnie',
+ '30 min spokojnego biegu',
+ '25 min biegu + 4×20 s przebieżki',
+ '20 min bardzo lekko, bez akcentów',
+ '30–35 min spokojnie; test 12 min tylko jeśli pełne zdrowie i dobra regeneracja'
+ ];
+ const swimPlan=[
+ '8×25 m spokojnie, przerwa 30–45 s',
+ '10×25 m, co drugi odcinek grzbietem',
+ '6×25 m technika + 4×25 m spokojnie',
+ '6×25 m luźno, skupienie na oddechu',
+ '8×25 m kraul + 4×25 m grzbiet',
+ '10×25 m równym tempem',
+ '4×50 m z przerwą 45–60 s',
+ '6×25 m technicznie, bez zmęczenia',
+ '6×50 m spokojnie',
+ '4×50 m + 4×25 m technika',
+ '3×50 m + 4×25 m grzbiet',
+ '8×25 m luźno',
+ '4×50 m + 2×25 m nieco żwawiej',
+ '5×50 m równo',
+ '6×50 m z kontrolą oddechu',
+ '4×25 m bardzo lekko',
+ '4×75 m lub 6×50 m według techniki',
+ '6×50 m, równe tempo',
+ '3×100 m lub 6×50 m',
+ '4×50 m regeneracyjnie',
+ '4×100 m lub 8×50 m',
+ '6×50 m + 4×25 m technika',
+ '4×25 m bardzo lekko',
+ 'Do 200 m ciągiem tylko przy zachowaniu techniki; alternatywnie 4×50 m'
+ ];
+ const hikePlan=[
+ 'Spacer 45 min po płaskim, bez plecaka',
+ 'Marsz 50 min, łagodne wzniesienia',
+ 'Marsz 55 min, 3 krótkie podejścia',
+ 'Spacer 35–40 min regeneracyjnie',
+ 'Marsz 60 min, lekki teren',
+ 'Marsz 65 min, kontrolowane zejścia',
+ 'Marsz 70 min, łagodne przewyższenie',
+ 'Spacer 40 min bardzo lekko',
+ 'Marsz 70 min, plecak maks. 2–3 kg jeśli bez dolegliwości',
+ 'Marsz 75 min, 4 podejścia',
+ 'Marsz 80 min po zróżnicowanym terenie',
+ 'Spacer 45 min bez obciążenia',
+ 'Marsz 85 min, plecak 3 kg opcjonalnie',
+ 'Marsz 90 min, spokojne tempo',
+ 'Marsz 95 min, ćwiczenie rytmu na podejściu',
+ 'Spacer 50 min regeneracyjnie',
+ 'Marsz 100 min, teren pagórkowaty',
+ 'Marsz 105 min, plecak 3–4 kg tylko przy dobrej tolerancji',
+ 'Marsz 110 min, długie podejścia w komforcie',
+ 'Marsz 60 min bardzo lekko',
+ 'Marsz 115 min, teren mieszany',
+ 'Marsz 90 min, płynne tempo i kontrola zejść',
+ 'Marsz 60 min, bez plecaka',
+ 'Marsz 75–90 min, łatwy teren; zakończ z zapasem sił'
+ ];
+ const upperExercises=upper.map((n,i)=>ex(n,strengthSets,[ '8–10','8–12','6–12','8–10','12–15','8–10 na stronę'][i],i<4?'90 s':'45–60 s',deload?'Tydzień lżejszy: RPE 5–6, bez forsowania.':'RPE 6–7; ruch kontrolowany, 2–3 powtórzenia w zapasie.'));
+ const lowerExercises=lower.map((n,i)=>ex(n,strengthSets,['8–10','8–10','8 na nogę','10–12','12–15','8–10 na stronę'][i],i<4?'90 s':'45–60 s',deload?'Tydzień lżejszy: zmniejsz zakres/ciężar, ruch bez bólu.':'RPE 6–7; stabilne kolano i stopa, bez bólu.'));
+ const m=mobilitySets[rotation].map((n,i)=>ex(n,1,i===4?'5 min':'6–8 powtórzeń na stronę','—','Łagodny zakres ruchu, bez bólu; spokojny oddech.'));
+ const swim=swimSets[rotation].map(n=>ex(n,1,'według opisu','30–60 s','Odpocznij, jeśli oddech lub technika się pogarsza.'));
+ const hike=hikeSets[rotation].map(n=>ex(n,1,'8–12 min','—','Kontroluj krok; bez obciążenia jeśli pojawia się ból.'));
+ const run=[ex('Rozgrzewka: marsz + mobilizacja',1,'8–10 min','—','Zacznij spokojnie.'),ex('Główna część biegu',1,runPlan[w-1],'według oddechu','Tempo konwersacyjne, RPE 4–6. Jeśli nie możesz mówić pełnymi zdaniami, zwolnij.'),ex('Schłodzenie: marsz',1,'5–8 min','—','Zakończ spokojnie; nie dokładaj kilometrów.')];
+ const rest=ex('Pełny odpoczynek',1,'bez treningu','—','Sen, regularne posiłki i nawodnienie. Spacer wyłącznie rekreacyjnie.');
+ const easy=ex('Regeneracyjny spacer',1,deload?'15–20 min':'20–30 min','—','Opcjonalnie; ma poprawić samopoczucie, nie męczyć.');
  return [
-  {title:'Góra ciała',desc:'Trening siłowy — dobieraj wariant do możliwości.',exercises:[ex('Podciąganie lub ściąganie drążka',sets,'6–10'),ex('Pompki',sets,'8–12'),ex('Wiosłowanie hantlą',sets,'10 na stronę'),ex('Wyciskanie hantli',sets,'10'),ex('Dead bug',2,'10 na stronę','45 s')]},
-  {title:'Regeneracja',desc:'Lekki ruch i mobilizacja, bez forsowania.',exercises:[ex('Spokojny spacer',1,'20–30 min','—','Tempo swobodne'),ex('Mobilizacja bioder, kostek i klatki',2,'8–10 min','—','Bez bólu i pogłębiania dyskomfortu')]},
-  {title:'Basen',desc:'Skup się na technice, spokojnym oddechu i odpoczynku między odcinkami.',exercises:[ex('Pływanie spokojne',1,swim,'30–60 s','Przerwy według oddechu i techniki')]},
-  {title:'Dół ciała + core',desc:'Stabilna technika, bez treningu do upadku.',exercises:[ex('Goblet squat',sets,'8–10'),ex('Martwy ciąg rumuński z hantlami',sets,'10'),ex('Step-up',2,'8 na nogę'),ex('Hip thrust',sets,'12'),ex('Side plank',2,'20–30 s na stronę','45 s')]},
-  {title:'Odpoczynek',desc:'Pełny odpoczynek. Lekki spacer tylko jeśli masz ochotę.',exercises:[ex('Regeneracja',1,'odpoczynek','—','Sen i nawodnienie')]},
-  {title:'Aktywność lekka',desc:'Bez ścigania tempa; plecak z obciążeniem dopiero po dobrej tolerancji marszów.',exercises:[ex('Marsz / łatwy teren',1,walk,'—','Swobodne tempo')]},
-  {title:'BIEG — STAŁY DZIEŃ',desc:'Tempo konwersacyjne. Rozgrzewka marszem 5–10 min i schłodzenie 5 min.',exercises:[ex('Bieg / marsz według etapu',1,run,'—','Przerwij, jeśli pojawia się ból; nie nadrabiaj opuszczonych treningów')]}
+ {title:'Siła — góra ciała',desc:'Siła bazowa, kontrola łopatek i stabilny tułów. Rozgrzewka 8–10 min; dobierz ciężar do RPE.',exercises:upperExercises},
+ {title:'Regeneracja i mobilność',desc:'Dzień niskiej intensywności. Nie nadrabiaj opuszczonych treningów.',exercises:[easy,...m]},
+ {title:'Pływanie — technika i tlen',desc:'Spokojna sesja techniczna. Długości basenu dopasuj do obiektu; przerwy są częścią treningu.',exercises:swim},
+ {title:'Siła — dół ciała i core',desc:'Wzorzec przysiadu, zawias biodrowy, stabilizacja i łydka. Bez bólu stawów.',exercises:lowerExercises},
+ {title:'Odpoczynek',desc:'Dzień bez treningu. Priorytet: sen i regeneracja.',exercises:[rest]},
+ {title:'Marsz i przygotowanie górskie',desc:'Buduj czas na nogach stopniowo. Plecak tylko jeśli poprzednie tygodnie były bez dolegliwości.',exercises:[ex(hikePlan[w-1],1,'według opisu','—','RPE 3–4; swobodne tempo, zakończ z zapasem.'),...hike]},
+ {title:'BIEG — rozwój wytrzymałości',desc:'Niedziela jest stałym dniem biegania. Rozgrzewka i schłodzenie obowiązkowe; tylko bez bólu.',exercises:run}
  ];
 }
 let currentWeek=1;
