@@ -345,6 +345,25 @@ section.page#body .pillar-hero p{font-size:12px;max-width:340px}
  #mountain .hero{min-height:205px;padding:18px 15px}
 }
 
+
+/* iOS Safari — ciemne pola daty w całej aplikacji */
+input[type="date"]{
+  display:block;
+  width:100%;
+  min-width:0;
+  min-height:52px;
+  padding:10px 12px;
+  background-color:#0d131a !important;
+  color:#f4f6f2 !important;
+  -webkit-text-fill-color:#f4f6f2;
+  border:1px solid #293640 !important;
+  border-radius:4px !important;
+  color-scheme:dark;
+  font:inherit;
+  line-height:1.5;
+}
+input[type="date"]::-webkit-date-and-time-value{ text-align:left; }
+input[type="date"]::-webkit-calendar-picker-indicator{ opacity:.85; filter:invert(.85); }
 </style>
 </head>
 <body>
