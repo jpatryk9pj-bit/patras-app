@@ -26,7 +26,7 @@ section.page{display:none}section.page.active{display:block}.section-head{displa
 select,input[type=text],input[type=number],textarea{background:#0d131a;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
 .week-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0}.week{padding:10px 5px;border:1px solid var(--line);background:#111820;color:var(--muted);border-radius:10px;font-size:12px}.week.active{border-color:var(--lime);color:var(--lime);background:#c7f36b12}
 .day{padding:14px;border:1px solid var(--line);border-radius:14px;background:#111820;margin:9px 0}.day-top{display:flex;justify-content:space-between;gap:10px}.day-name{font-weight:800}.badge{font-size:10px;color:var(--lime);border:1px solid #566b3b;border-radius:999px;padding:3px 7px;white-space:nowrap}
-.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid #26313b}.exercise:last-child{border:0}.exercise strong{font-size:13px}.exercise small{display:block;color:var(--muted)}
+.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid #26313b}.exercise:last-child{border:0}.exercise-actions{display:flex;gap:6px;align-items:center}.btn.tiny{padding:6px 9px;font-size:11px;border-radius:9px}.editor{margin-top:12px;padding:14px;border:1px solid #536b3b;border-radius:14px;background:#121b16}.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.editor label{display:block;font-size:11px;color:var(--muted);margin:7px 0 4px}.editor .wide{grid-column:1/-1}.editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.exercise strong{font-size:13px}.exercise small{display:block;color:var(--muted)}.result-box{margin:8px 0 4px;padding:10px;border:1px solid #354532;border-radius:11px;background:#121a15}.set-row{display:grid;grid-template-columns:42px 1fr 1fr;gap:7px;align-items:center;margin:7px 0}.set-row span{font-size:12px;color:var(--muted)}.result-history{font-size:11px;color:var(--muted);margin-top:6px}.log-editor{margin:10px 0;padding:13px;border:1px solid var(--lime);border-radius:13px;background:#111a15}.log-editor h3{margin-bottom:4px}.log-editor label{display:block;font-size:11px;color:var(--muted);margin:8px 0 4px}
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}.compare .card{padding:14px}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600}
 .note{border-left:3px solid var(--lime);padding:10px 12px;background:#c7f36b0c;color:#cbd4dc;border-radius:0 10px 10px 0;font-size:12px;margin:14px 0}
@@ -51,7 +51,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;p
 <div class="section-head"><div><div class="eyebrow">Systematyczna progresja</div><h2>Plan treningowy — 24 tygodnie</h2></div></div>
 <div class="card"><div class="small">WYBIERZ TYDZIEŃ</div><div class="week-list" id="weeks"></div><div class="small" id="phase"></div></div>
 <div class="section-head" style="margin-top:22px"><div><div class="eyebrow">Tydzień <span id="weekNo">1</span></div><h2 id="weekTitle">Fundament</h2></div></div>
-<div id="days"></div>
+<div id="days"></div><div id="exerciseEditor"></div>
 <div class="section-head" style="margin-top:25px"><div><div class="eyebrow">Porównanie</div><h2>Dzień 1 vs ostatni dzień</h2></div></div>
 <div class="compare">
 <div class="card"><div class="badge">START · TYDZIEŃ 1</div><h3>Budowanie bazy</h3><p class="small">Bieg: 6 × (1 min trucht / 2 min marsz)</p><p class="small">Pływanie: 8 × 25 m spokojnie</p><p class="small">Siła: 2–3 serie, umiarkowany wysiłek</p><p class="small">Marsz: 45–60 min</p></div>
@@ -79,24 +79,25 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;p
 <script>
 const $=id=>document.getElementById(id);
 const STORAGE='patras_app_v2';
-let state={checks:{},logs:[]};
-try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){}
+let state={checks:{},logs:[],exercisePlans:{},workoutLogs:{}};
+try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){};state.exercisePlans=state.exercisePlans||{};state.checks=state.checks||{};state.logs=state.logs||[];state.workoutLogs=state.workoutLogs||{};
 const days=['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
 const phases=['Fundament','Fundament','Budowanie','Budowanie','Siła i wytrzymałość','Siła i wytrzymałość','Wydolność','Wydolność'];
 function weekData(w){
  const deload=[4,8,12,16,20,23].includes(w);
- const run=w<=4?`6 × (1 min trucht / 2 min marsz)`:w<=8?`${6+Math.floor((w-5)/2)} × (2–3 min trucht / 2 min marsz)`:w<=12?`5–6 × (5–8 min bieg / 2 min marsz)`:w<=16?`20–25 min spokojnego biegu`:w<=20?`25–30 min spokojnego biegu + krótkie przyspieszenia`:w===24?`30–35 min spokojnie; test 12 min tylko jeśli bez bólu`:`25–30 min spokojnego biegu`;
- const swim=w<=4?'8 × 25 m spokojnie':w<=8?'10 × 25 m spokojnie':w<=12?'6 × 50 m z przerwą':w<=16?'8 × 50 m z przerwą':w<=20?'4 × 100 m spokojnie':'do 200 m ciągiem, jeśli bezpiecznie';
- const walk=w<=4?'45–60 min łatwego marszu':w<=8?'60 min marszu':w<=12?'60–75 min marszu':'75–120 min marszu w łatwym terenie';
- let strength=deload?'2 serie, lekko, zostaw 4 powtórzenia w zapasie':w<=4?'2–3 serie, zostaw 3–4 powtórzenia w zapasie':w<=12?'3 serie, zostaw 2–3 powtórzenia w zapasie':'3–4 serie, zostaw 2 powtórzenia w zapasie';
+ const run=w<=4?'6 × (1 min trucht / 2 min marsz)':w<=8?`${6+Math.floor((w-5)/2)} × (2–3 min trucht / 2 min marsz)`:w<=12?'5–6 × (5–8 min bieg / 2 min marsz)':w<=16?'20–25 min spokojnego biegu':w<=20?'25–30 min spokojnego biegu + krótkie przyspieszenia':w===24?'30–35 min spokojnie; test 12 min opcjonalnie':'25–30 min spokojnego biegu';
+ const swim=w<=4?'8 × 25 m':w<=8?'10 × 25 m':w<=12?'6 × 50 m':w<=16?'8 × 50 m':w<=20?'4 × 100 m':'do 200 m ciągiem';
+ const walk=w<=4?'45–60 min':w<=8?'60 min':w<=12?'60–75 min':'75–120 min';
+ const sets=deload?2:w<=4?2:3;
+ const ex=(name,sets,reps,rest='60–90 s',notes='Ruch kontrolowany; zostaw 2–4 powtórzenia w zapasie')=>({name,sets,reps,rest,notes});
  return [
- ['Góra ciała',`Podciąganie lub ściąganie drążka 3×6–10; pompki 3×8–12; wiosłowanie 3×10; wyciskanie hantli 3×10; dead bug 3×10. ${strength}`],
- ['Regeneracja','20–30 min spaceru + 10–15 min mobilizacji bioder, kostek, klatki piersiowej. Bez forsowania.'],
- ['Basen',`${swim}. Odpoczywaj między odcinkami; skup się na spokojnym oddechu i technice.`],
- ['Dół ciała + core',`Goblet squat 3×8–10; RDL z hantlami 3×10; step-up 2×8 na nogę; hip thrust 3×12; side plank 3×20–30 s. ${strength}`],
- ['Odpoczynek','Pełny odpoczynek. Lekki spacer tylko jeśli masz ochotę.'],
- ['Aktywność lekka',`${walk}. Bez ścigania tempa; plecak z obciążeniem dopiero po dobrej tolerancji marszów.`],
- ['BIEG — STAŁY DZIEŃ',`${run}. Tempo konwersacyjne. Rozgrzewka marszem 5–10 min i schłodzenie 5 min.`]
+  {title:'Góra ciała',desc:'Trening siłowy — dobieraj wariant do możliwości.',exercises:[ex('Podciąganie lub ściąganie drążka',sets,'6–10'),ex('Pompki',sets,'8–12'),ex('Wiosłowanie hantlą',sets,'10 na stronę'),ex('Wyciskanie hantli',sets,'10'),ex('Dead bug',2,'10 na stronę','45 s')]},
+  {title:'Regeneracja',desc:'Lekki ruch i mobilizacja, bez forsowania.',exercises:[ex('Spokojny spacer',1,'20–30 min','—','Tempo swobodne'),ex('Mobilizacja bioder, kostek i klatki',2,'8–10 min','—','Bez bólu i pogłębiania dyskomfortu')]},
+  {title:'Basen',desc:'Skup się na technice, spokojnym oddechu i odpoczynku między odcinkami.',exercises:[ex('Pływanie spokojne',1,swim,'30–60 s','Przerwy według oddechu i techniki')]},
+  {title:'Dół ciała + core',desc:'Stabilna technika, bez treningu do upadku.',exercises:[ex('Goblet squat',sets,'8–10'),ex('Martwy ciąg rumuński z hantlami',sets,'10'),ex('Step-up',2,'8 na nogę'),ex('Hip thrust',sets,'12'),ex('Side plank',2,'20–30 s na stronę','45 s')]},
+  {title:'Odpoczynek',desc:'Pełny odpoczynek. Lekki spacer tylko jeśli masz ochotę.',exercises:[ex('Regeneracja',1,'odpoczynek','—','Sen i nawodnienie')]},
+  {title:'Aktywność lekka',desc:'Bez ścigania tempa; plecak z obciążeniem dopiero po dobrej tolerancji marszów.',exercises:[ex('Marsz / łatwy teren',1,walk,'—','Swobodne tempo')]},
+  {title:'BIEG — STAŁY DZIEŃ',desc:'Tempo konwersacyjne. Rozgrzewka marszem 5–10 min i schłodzenie 5 min.',exercises:[ex('Bieg / marsz według etapu',1,run,'—','Przerwij, jeśli pojawia się ból; nie nadrabiaj opuszczonych treningów')]}
  ];
 }
 let currentWeek=1;
@@ -104,10 +105,37 @@ function save(){localStorage.setItem(STORAGE,JSON.stringify(state));refreshStats
 function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan()}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function renderWeeks(){ $('weeks').innerHTML=Array.from({length:24},(_,i)=>`<button class="week ${currentWeek===i+1?'active':''}" onclick="currentWeek=${i+1};renderPlan()">T${i+1}</button>`).join('')}
-function renderPlan(){renderWeeks();$('weekNo').textContent=currentWeek;$('weekTitle').textContent= currentWeek===24?'Finisz i sprawdzenie':phases[Math.min(7,Math.floor((currentWeek-1)/3))];$('phase').textContent=`Etap: ${$('weekTitle').textContent}. ${[4,8,12,16,20,23].includes(currentWeek)?'Tydzień lżejszy — zmniejsz objętość o około 30–40%.':'Zwiększaj obciążenie tylko wtedy, gdy technika i regeneracja są dobre.'}`;
- const data=weekData(currentWeek);$('days').innerHTML=data.map((d,i)=>{let key=`w${currentWeek}d${i}`;return `<div class="day"><div class="day-top"><div class="day-name">${days[i]} · ${d[0]}</div>${i===6?'<span class="badge">RUN DAY</span>':''}</div><div class="small" style="margin-top:8px">${d[1]}</div><label class="small" style="display:flex;align-items:center;gap:8px;margin-top:12px"><input type="checkbox" ${state.checks[key]?'checked':''} onchange="toggle('${key}',this.checked)"> Zrobione</label></div>`}).join('')}
+function renderPlan(){renderWeeks();$('weekNo').textContent=currentWeek;$('weekTitle').textContent=currentWeek===24?'Finisz i sprawdzenie':phases[Math.min(7,Math.floor((currentWeek-1)/3))];$('phase').textContent=`Etap: ${$('weekTitle').textContent}. ${[4,8,12,16,20,23].includes(currentWeek)?'Tydzień lżejszy — zmniejsz objętość o około 30–40%.':'Zwiększaj obciążenie tylko wtedy, gdy technika i regeneracja są dobre.'}`;
+ const data=weekData(currentWeek);$('days').innerHTML=data.map((d,i)=>{let key=`w${currentWeek}d${i}`,items=state.exercisePlans[key]||d.exercises;return `<div class="day"><div class="day-top"><div class="day-name">${days[i]} · ${d.title}</div>${i===6?'<span class="badge">RUN DAY</span>':''}</div><div class="small" style="margin:6px 0 8px">${d.desc}</div>${items.map((e,j)=>{let logKey=`${key}:${j}`,history=state.workoutLogs[logKey]||[],last=history[history.length-1];return `<div class="exercise"><div><strong>${escapeHtml(e.name)}</strong><small>${escapeHtml(String(e.sets))} serii · ${escapeHtml(e.reps)} · przerwa ${escapeHtml(e.rest||'—')}<br>${escapeHtml(e.notes||'')}</small>${last?`<div class="result-history">Ostatni wynik: ${last.date} · ${last.sets.map(x=>`${x.weight||'BW'} kg × ${x.reps||'—'}`).join(' / ')}</div>`:''}</div><div class="exercise-actions"><button class="btn tiny primary" onclick="openExerciseLog('${key}',${j})">Wynik</button><button class="btn tiny" onclick="editExercise('${key}',${j})">Edytuj</button><button class="btn tiny" onclick="deleteExercise('${key}',${j})" aria-label="Usuń ćwiczenie">Usuń</button></div></div>`}).join('')}<div class="actions" style="margin-top:10px"><button class="btn tiny" onclick="addExercise('${key}')">＋ Dodaj ćwiczenie</button><label class="small" style="display:flex;align-items:center;gap:7px;margin-left:auto"><input type="checkbox" ${state.checks[key]?'checked':''} onchange="toggle('${key}',this.checked)"> Zrobione</label></div></div>`}).join('');$('exerciseEditor').innerHTML='';$('exerciseEditor').insertAdjacentHTML('beforeend','<div id="workoutLogEditor"></div>');}
+let editingExercise=null;
+function editExercise(key,index){editingExercise={key,index};showExerciseEditor(state.exercisePlans[key]?.[index]||weekData(Number(key.match(/w(\d+)/)[1]))[Number(key.match(/d(\d+)/)[1])].exercises[index]);}
+function addExercise(key){editingExercise={key,index:-1};showExerciseEditor({name:'',sets:3,reps:'8–12',rest:'60–90 s',notes:''});}
+function showExerciseEditor(e){$('exerciseEditor').innerHTML=`<div class="editor"><h3>${editingExercise.index<0?'Dodaj ćwiczenie':'Edytuj ćwiczenie'}</h3><div class="editor-grid"><div class="wide"><label for="exName">Nazwa ćwiczenia</label><input id="exName" type="text" value="${escapeHtml(e.name)}" placeholder="np. Wyciskanie hantli"></div><div><label for="exSets">Liczba serii</label><input id="exSets" type="number" min="1" max="20" value="${escapeHtml(e.sets)}"></div><div><label for="exReps">Powtórzenia / czas / dystans</label><input id="exReps" type="text" value="${escapeHtml(e.reps)}"></div><div><label for="exRest">Przerwa</label><input id="exRest" type="text" value="${escapeHtml(e.rest||'')}"></div><div class="wide"><label for="exNotes">Wskazówki</label><textarea id="exNotes" rows="2">${escapeHtml(e.notes||'')}</textarea></div></div><div class="editor-actions"><button class="btn primary" onclick="saveExercise()">Zapisz ćwiczenie</button><button class="btn" onclick="$('exerciseEditor').innerHTML='';editingExercise=null">Anuluj</button></div></div>`;$('exerciseEditor').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function saveExercise(){let name=$('exName').value.trim();if(!name){alert('Wpisz nazwę ćwiczenia.');return}let {key,index}=editingExercise;let list=[...(state.exercisePlans[key]||weekData(Number(key.match(/w(\d+)/)[1]))[Number(key.match(/d(\d+)/)[1])].exercises)];let item={name,sets:Math.max(1,Number($('exSets').value)||1),reps:$('exReps').value.trim()||'według możliwości',rest:$('exRest').value.trim()||'—',notes:$('exNotes').value.trim()};if(index<0)list.push(item);else list[index]=item;state.exercisePlans[key]=list;editingExercise=null;save();renderPlan();}
+function deleteExercise(key,index){if(!confirm('Usunąć to ćwiczenie z planu?'))return;let list=[...(state.exercisePlans[key]||weekData(Number(key.match(/w(\d+)/)[1]))[Number(key.match(/d(\d+)/)[1])].exercises)];list.splice(index,1);state.exercisePlans[key]=list;save();renderPlan();}
+
+function openExerciseLog(key,index,historyIndex=-1){
+ const week=Number(key.match(/w(\d+)/)[1]),day=Number(key.match(/d(\d+)/)[1]);
+ const item=(state.exercisePlans[key]||weekData(week)[day].exercises)[index];
+ const logKey=`${key}:${index}`,history=state.workoutLogs[logKey]||[];
+ const existing=historyIndex>=0?history[historyIndex]:null;
+ const count=Math.max(1,Math.min(20,Number(item.sets)||1));
+ const rows=Array.from({length:count},(_,i)=>{const set=existing?.sets?.[i]||{};return `<div class="set-row"><span>Seria ${i+1}</span><input type="number" min="0" step="0.5" id="logWeight${i}" placeholder="kg" value="${escapeHtml(set.weight??'')}"><input type="number" min="0" step="1" id="logReps${i}" placeholder="powt. / sek." value="${escapeHtml(set.reps??'')}"></div>`}).join('');
+ $('workoutLogEditor').innerHTML=`<div class="log-editor"><h3>${existing?'Edytuj zapis':'Zapisz wykonanie'} · ${escapeHtml(item.name)}</h3><div class="small">Wpisz rzeczywiste wyniki każdej serii. Przy ćwiczeniach z masą własnego ciała pole kg możesz zostawić puste.</div><div class="set-row"><span></span><span class="small">Obciążenie (kg)</span><span class="small">Powtórzenia / czas</span></div>${rows}<label for="logRpe">Odczuwalna trudność (RPE 1–10, opcjonalnie)</label><input type="number" id="logRpe" min="1" max="10" step="0.5" placeholder="np. 7" value="${existing?.rpe??''}"><label for="logNote">Notatka (opcjonalnie)</label><textarea id="logNote" rows="2" placeholder="Np. dobra technika, zapas 2 powtórzeń">${escapeHtml(existing?.note||'')}</textarea><div class="editor-actions"><button class="btn primary" onclick="saveWorkoutLog('${key}',${index},${historyIndex},${count})">Zapisz wynik</button><button class="btn" onclick="closeWorkoutLog()">Anuluj</button></div>${history.length?`<div class="result-history">Historia zapisów: ${history.map((h,i)=>`<button class="btn tiny" onclick="openExerciseLog('${key}',${index},${i})">${h.date}${i===history.length-1?' · ostatni':''}</button>`).join(' ')}</div>`:''}</div>`;
+ $('workoutLogEditor').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function saveWorkoutLog(key,index,historyIndex,count){
+ const sets=[];for(let i=0;i<count;i++){const weight=$(`logWeight${i}`).value.trim(),reps=$(`logReps${i}`).value.trim();if(weight!==''||reps!=='')sets.push({weight,reps});}
+ if(!sets.length){alert('Wpisz przynajmniej jeden wynik serii.');return;}
+ const logKey=`${key}:${index}`,history=state.workoutLogs[logKey]||[];
+ const record={date:new Date().toLocaleString('pl-PL'),timestamp:Date.now(),sets,rpe:$('logRpe').value,note:$('logNote').value.trim()};
+ if(historyIndex>=0)history[historyIndex]=record;else history.push(record);
+ state.workoutLogs[logKey]=history;save();renderPlan();
+}
+function closeWorkoutLog(){const el=$('workoutLogEditor');if(el)el.innerHTML='';}
+
 function toggle(k,v){state.checks[k]=v;save();renderPlan();renderToday()}
-function renderToday(){let d=new Date().getDay(),idx=d===0?6:d-1;let data=weekData(currentWeek);$('todayWorkout').innerHTML=`<div class="day-name">${days[idx]} · ${data[idx][0]}</div><p class="small">${data[idx][1]}</p><label class="small"><input type="checkbox" ${state.checks[`w${currentWeek}d${idx}`]?'checked':''} onchange="toggle('w${currentWeek}d${idx}',this.checked)"> Oznacz jako wykonane</label>`;$('todayLabel').textContent=days[idx].toUpperCase()}
+function renderToday(){let d=new Date().getDay(),idx=d===0?6:d-1;let data=weekData(currentWeek),day=data[idx],items=state.exercisePlans[`w${currentWeek}d${idx}`]||day.exercises;$('todayWorkout').innerHTML=`<div class="day-name">${days[idx]} · ${day.title}</div><p class="small">${day.desc}</p><div>${items.map(e=>`<div class="exercise"><div><strong>${escapeHtml(e.name)}</strong><small>${escapeHtml(String(e.sets))} serii · ${escapeHtml(e.reps)}</small></div></div>`).join('')}</div><label class="small"><input type="checkbox" ${state.checks[`w${currentWeek}d${idx}`]?'checked':''} onchange="toggle('w${currentWeek}d${idx}',this.checked)"> Oznacz jako wykonane</label>`;$('todayLabel').textContent=days[idx].toUpperCase()}
 function refreshStats(){let done=Object.values(state.checks).filter(Boolean).length,total=24*7,pct=Math.round(done/total*100);$('doneCount').textContent=done;$('progressDone').textContent=done;$('percent').textContent=pct+'%';$('progressPct').textContent=pct+'%';$('mainBar').style.width=pct+'%';$('dayCount').textContent=Math.min(168,Math.floor((Date.now()-new Date(new Date().getFullYear(),0,1).getTime())/86400000)+1)}
 function resetToday(){let d=new Date().getDay(),idx=d===0?6:d-1;delete state.checks[`w${currentWeek}d${idx}`];save();renderToday();renderPlan()}
 function saveLog(){let item={date:new Date().toLocaleDateString('pl-PL'),weight:$('weight').value,memo:$('memo').value};state.logs.unshift(item);save();$('memo').value='';renderLogs()}
