@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090d12">
+<title>PATRAS. — Make Every Day Count</title>
+<style>
+:root{--bg:#090d12;--panel:#141b24;--panel2:#1b2530;--line:#2a3542;--text:#f4f7fb;--muted:#9aa7b5;--lime:#c7f36b;--lime2:#a9d94e;--red:#ff7676}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:980px;margin:auto;padding:0 18px}
+header{position:sticky;top:0;z-index:10;background:rgba(9,13,18,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.top{height:66px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:23px;font-weight:900;letter-spacing:3px}.brand span{color:var(--lime)}.tag{font-size:10px;letter-spacing:2px;color:var(--muted)}
+main{padding:22px 0}.eyebrow{color:var(--lime);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(29px,6vw,48px);line-height:1.05;margin:9px 0 12px;letter-spacing:-1.5px}h2{font-size:22px;margin:0 0 14px}h3{font-size:16px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.hero{border:1px solid #34414d;border-radius:24px;padding:25px;background:linear-gradient(125deg,rgba(30,45,53,.94),rgba(13,19,26,.97)),radial-gradient(circle at 85% 20%,#536a43,transparent 40%);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:220px;height:220px;border:1px solid #53616c;border-radius:50%;right:-70px;top:-75px;box-shadow:0 0 0 22px #ffffff06,0 0 0 48px #ffffff04}
+.hero p{max-width:540px;color:#c3cbd2}.hero-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:#dce4eb;background:#111820;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.metric{font-size:27px;font-weight:850;letter-spacing:-1px}.metric span{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:0}.bar{height:7px;border-radius:20px;background:#2a3540;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:var(--lime);border-radius:20px;width:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#202b36;color:var(--text);border-radius:12px;padding:10px 14px;font-weight:700}.btn.primary{background:var(--lime);color:#10150a;border-color:var(--lime)}.btn:active{transform:scale(.98)}
+section.page{display:none}section.page.active{display:block}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px}
+.nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:rgba(15,21,28,.96);border-top:1px solid var(--line);backdrop-filter:blur(16px);padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:4px}
+.nav button{flex:1;max-width:150px;border:0;background:transparent;color:var(--muted);padding:8px 2px;border-radius:12px;font-size:11px}.nav button b{display:block;font-size:18px;font-weight:500}.nav button.active{color:var(--lime);background:#c7f36b12}
+.task{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task input{accent-color:var(--lime);width:19px;height:19px;margin-top:2px}.task.done .task-name{text-decoration:line-through;color:var(--muted)}
+select,input[type=text],input[type=number],textarea{background:#0d131a;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
+.week-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0}.week{padding:10px 5px;border:1px solid var(--line);background:#111820;color:var(--muted);border-radius:10px;font-size:12px}.week.active{border-color:var(--lime);color:var(--lime);background:#c7f36b12}
+.day{padding:14px;border:1px solid var(--line);border-radius:14px;background:#111820;margin:9px 0}.day-top{display:flex;justify-content:space-between;gap:10px}.day-name{font-weight:800}.badge{font-size:10px;color:var(--lime);border:1px solid #566b3b;border-radius:999px;padding:3px 7px;white-space:nowrap}
+.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid #26313b}.exercise:last-child{border:0}.exercise strong{font-size:13px}.exercise small{display:block;color:var(--muted)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}.compare .card{padding:14px}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600}
+.note{border-left:3px solid var(--lime);padding:10px 12px;background:#c7f36b0c;color:#cbd4dc;border-radius:0 10px 10px 0;font-size:12px;margin:14px 0}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.week-list{grid-template-columns:repeat(8,minmax(0,1fr))}.nav{position:sticky;top:66px;bottom:auto;border-top:0;border-bottom:1px solid var(--line);padding:6px 12px}.nav button{max-width:180px}body{padding-bottom:20px}}
+@media(max-width:390px){.wrap{padding:0 13px}.hero{padding:20px}.grid{gap:9px}.card{padding:14px}.week-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="wrap top"><div><div class="brand">PATRAS<span>.</span></div><div class="tag">MAKE EVERY DAY COUNT</div></div><div class="small" id="today"></div></div></header>
+<div class="nav" role="navigation" aria-label="Główna nawigacja">
+<button class="active" data-page="home"><b>⌂</b>Start</button><button data-page="plan"><b>▦</b>Plan</button><button data-page="food"><b>◉</b>Odżywianie</button><button data-page="progress"><b>↗</b>Postępy</button><button data-page="mountain"><b>△</b>Góry</button>
+</div>
+<main class="wrap">
+<section class="page active" id="home">
+<div class="hero"><div class="eyebrow">Twoja misja zaczyna się dziś</div><h1>MAKE EVERY<br>DAY COUNT.</h1><p>Buduj formę, dyscyplinę i wytrzymałość. Małe kroki. Konsekwentna praca. Wielki cel.</p><div class="hero-row"><span class="pill">BODY</span><span class="pill">MIND</span><span class="pill">MOUNTAIN</span><span class="pill">MISSION</span><span class="pill">GROWTH</span></div></div>
+<div class="grid"><div class="card"><div class="small">PROGRAM</div><div class="metric">24 <span>tygodnie</span></div><div class="small">Plan przygotowania</div></div><div class="card"><div class="small">DZIEŃ PROGRAMU</div><div class="metric" id="dayCount">1</div><div class="small">Nie odpuszczaj</div></div><div class="card"><div class="small">WYKONANE ZADANIA</div><div class="metric" id="doneCount">0</div><div class="small">Zaznaczone w planie</div></div><div class="card"><div class="small">POSTĘP</div><div class="metric" id="percent">0%</div><div class="bar"><i id="mainBar"></i></div></div></div>
+<div class="section-head"><div><div class="eyebrow">Dzisiaj</div><h2>Twoja misja dnia</h2></div><span class="badge" id="todayLabel">START</span></div>
+<div class="card"><div id="todayWorkout"></div><div class="actions" style="margin-top:12px"><button class="btn primary" onclick="go('plan')">Otwórz plan treningowy</button><button class="btn" onclick="resetToday()">Reset dnia</button></div></div>
+<div class="note">Plan jest bazowym programem ogólnorozwojowym, a nie oficjalnym programem selekcyjnym SPKP. Obciążenia dobieraj do techniki i aktualnej dyspozycji.</div>
+</section>
+<section class="page" id="plan">
+<div class="section-head"><div><div class="eyebrow">Systematyczna progresja</div><h2>Plan treningowy — 24 tygodnie</h2></div></div>
+<div class="card"><div class="small">WYBIERZ TYDZIEŃ</div><div class="week-list" id="weeks"></div><div class="small" id="phase"></div></div>
+<div class="section-head" style="margin-top:22px"><div><div class="eyebrow">Tydzień <span id="weekNo">1</span></div><h2 id="weekTitle">Fundament</h2></div></div>
+<div id="days"></div>
+<div class="section-head" style="margin-top:25px"><div><div class="eyebrow">Porównanie</div><h2>Dzień 1 vs ostatni dzień</h2></div></div>
+<div class="compare">
+<div class="card"><div class="badge">START · TYDZIEŃ 1</div><h3>Budowanie bazy</h3><p class="small">Bieg: 6 × (1 min trucht / 2 min marsz)</p><p class="small">Pływanie: 8 × 25 m spokojnie</p><p class="small">Siła: 2–3 serie, umiarkowany wysiłek</p><p class="small">Marsz: 45–60 min</p></div>
+<div class="card"><div class="badge">FINISZ · TYDZIEŃ 24</div><h3>Sprawdzenie formy</h3><p class="small">Bieg: 30–35 min spokojnie; test 12 min opcjonalnie</p><p class="small">Pływanie: ciągły odcinek do 200 m, jeśli bezpiecznie</p><p class="small">Siła: większa kontrola i objętość, bez treningu do upadku</p><p class="small">Marsz: 75–120 min, łatwy teren</p></div></div>
+<div class="card" style="margin-top:12px"><h3>Co realnie się zmienia?</h3><table><tr><th>Obszar</th><th>Dzień 1</th><th>Dzień 168</th></tr><tr><td>Bieganie</td><td>Interwały marsz/trucht</td><td>30–35 min ciągłego biegu</td></tr><tr><td>Pływanie</td><td>Krótkie odcinki 25 m</td><td>Dłuższy odcinek do 200 m</td></tr><tr><td>Siła</td><td>Nauka techniki</td><td>Większa objętość i kontrola</td></tr><tr><td>Wytrzymałość</td><td>45–60 min marszu</td><td>75–120 min marszu</td></tr></table></div>
+<div class="note">Progres jest stopniowy i zależy od regeneracji. Jeśli pojawia się ból stopy, kolana lub biodra, przerwij bieganie i skonsultuj powrót do obciążeń.</div>
+</section>
+<section class="page" id="food">
+<div class="section-head"><div><div class="eyebrow">Paliwo dla organizmu</div><h2>Odżywianie</h2></div></div>
+<div class="grid"><div class="card"><div class="small">PRIORYTET</div><h3>Białko w każdym posiłku</h3><p class="small">Skyr, jaja, mięso, ryby, twaróg lub strączki.</p></div><div class="card"><div class="small">NAWODNIENIE</div><h3>Regularnie w ciągu dnia</h3><p class="small">Więcej przy wysiłku i upale.</p></div></div>
+<div class="card"><h3>Przykładowy dzień</h3><div class="task"><span>🥣</span><div><strong>Śniadanie</strong><div class="small">Owsianka, banan, skyr, garść orzechów</div></div></div><div class="task"><span>🍗</span><div><strong>Obiad</strong><div class="small">Kurczak, ryż, warzywa, oliwa</div></div></div><div class="task"><span>🥛</span><div><strong>Przekąska</strong><div class="small">Jogurt naturalny lub twaróg i owoc</div></div></div><div class="task"><span>🐟</span><div><strong>Kolacja</strong><div class="small">Ryba, ziemniaki i duża porcja warzyw</div></div></div></div>
+</section>
+<section class="page" id="progress">
+<div class="section-head"><div><div class="eyebrow">Dane, nie domysły</div><h2>Twoje postępy</h2></div></div>
+<div class="grid"><div class="card"><div class="small">ZADANIA ZROBIONE</div><div class="metric" id="progressDone">0</div></div><div class="card"><div class="small">PROCENT PLANU</div><div class="metric" id="progressPct">0%</div></div></div>
+<div class="card"><h3>Dziennik pomiarów</h3><label class="small" for="weight">Masa ciała (kg)</label><input id="weight" type="number" step=".1" placeholder="np. 109.5"><label class="small" for="memo" style="display:block;margin-top:12px">Notatka z treningu</label><textarea id="memo" rows="3" placeholder="Jak się czułeś? Co zrobiłeś?"></textarea><button class="btn primary" style="margin-top:12px" onclick="saveLog()">Zapisz wpis</button><div id="log" style="margin-top:14px"></div></div>
+</section>
+<section class="page" id="mountain">
+<div class="section-head"><div><div class="eyebrow">Poza siłownią</div><h2>Góry i wyprawy</h2></div></div>
+<div class="hero"><div class="eyebrow">MOUNTAIN MODE</div><h1>Earn the view.</h1><p>Buduj wytrzymałość na szlaku. Zacznij od spokojnych tras i stopniowo zwiększaj czas, przewyższenie oraz obciążenie plecaka.</p></div>
+<div class="grid"><div class="card"><h3>Przygotowanie</h3><p class="small">Buty, warstwy odzieży, woda, jedzenie, mapa offline i prognoza pogody.</p></div><div class="card"><h3>Progres</h3><p class="small">Notuj czas marszu, przewyższenie, dystans i samopoczucie.</p></div></div>
+<div class="card"><h3>Checklista wyprawy</h3><div id="mountainTasks"></div></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const STORAGE='patras_app_v2';
+let state={checks:{},logs:[]};
+try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){}
+const days=['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
+const phases=['Fundament','Fundament','Budowanie','Budowanie','Siła i wytrzymałość','Siła i wytrzymałość','Wydolność','Wydolność'];
+function weekData(w){
+ const deload=[4,8,12,16,20,23].includes(w);
+ const run=w<=4?`6 × (1 min trucht / 2 min marsz)`:w<=8?`${6+Math.floor((w-5)/2)} × (2–3 min trucht / 2 min marsz)`:w<=12?`5–6 × (5–8 min bieg / 2 min marsz)`:w<=16?`20–25 min spokojnego biegu`:w<=20?`25–30 min spokojnego biegu + krótkie przyspieszenia`:w===24?`30–35 min spokojnie; test 12 min tylko jeśli bez bólu`:`25–30 min spokojnego biegu`;
+ const swim=w<=4?'8 × 25 m spokojnie':w<=8?'10 × 25 m spokojnie':w<=12?'6 × 50 m z przerwą':w<=16?'8 × 50 m z przerwą':w<=20?'4 × 100 m spokojnie':'do 200 m ciągiem, jeśli bezpiecznie';
+ const walk=w<=4?'45–60 min łatwego marszu':w<=8?'60 min marszu':w<=12?'60–75 min marszu':'75–120 min marszu w łatwym terenie';
+ let strength=deload?'2 serie, lekko, zostaw 4 powtórzenia w zapasie':w<=4?'2–3 serie, zostaw 3–4 powtórzenia w zapasie':w<=12?'3 serie, zostaw 2–3 powtórzenia w zapasie':'3–4 serie, zostaw 2 powtórzenia w zapasie';
+ return [
+ ['Góra ciała',`Podciąganie lub ściąganie drążka 3×6–10; pompki 3×8–12; wiosłowanie 3×10; wyciskanie hantli 3×10; dead bug 3×10. ${strength}`],
+ ['Regeneracja','20–30 min spaceru + 10–15 min mobilizacji bioder, kostek, klatki piersiowej. Bez forsowania.'],
+ ['Basen',`${swim}. Odpoczywaj między odcinkami; skup się na spokojnym oddechu i technice.`],
+ ['Dół ciała + core',`Goblet squat 3×8–10; RDL z hantlami 3×10; step-up 2×8 na nogę; hip thrust 3×12; side plank 3×20–30 s. ${strength}`],
+ ['Odpoczynek','Pełny odpoczynek. Lekki spacer tylko jeśli masz ochotę.'],
+ ['Aktywność lekka',`${walk}. Bez ścigania tempa; plecak z obciążeniem dopiero po dobrej tolerancji marszów.`],
+ ['BIEG — STAŁY DZIEŃ',`${run}. Tempo konwersacyjne. Rozgrzewka marszem 5–10 min i schłodzenie 5 min.`]
+ ];
+}
+let currentWeek=1;
+function save(){localStorage.setItem(STORAGE,JSON.stringify(state));refreshStats()}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan()}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+function renderWeeks(){ $('weeks').innerHTML=Array.from({length:24},(_,i)=>`<button class="week ${currentWeek===i+1?'active':''}" onclick="currentWeek=${i+1};renderPlan()">T${i+1}</button>`).join('')}
+function renderPlan(){renderWeeks();$('weekNo').textContent=currentWeek;$('weekTitle').textContent= currentWeek===24?'Finisz i sprawdzenie':phases[Math.min(7,Math.floor((currentWeek-1)/3))];$('phase').textContent=`Etap: ${$('weekTitle').textContent}. ${[4,8,12,16,20,23].includes(currentWeek)?'Tydzień lżejszy — zmniejsz objętość o około 30–40%.':'Zwiększaj obciążenie tylko wtedy, gdy technika i regeneracja są dobre.'}`;
+ const data=weekData(currentWeek);$('days').innerHTML=data.map((d,i)=>{let key=`w${currentWeek}d${i}`;return `<div class="day"><div class="day-top"><div class="day-name">${days[i]} · ${d[0]}</div>${i===6?'<span class="badge">RUN DAY</span>':''}</div><div class="small" style="margin-top:8px">${d[1]}</div><label class="small" style="display:flex;align-items:center;gap:8px;margin-top:12px"><input type="checkbox" ${state.checks[key]?'checked':''} onchange="toggle('${key}',this.checked)"> Zrobione</label></div>`}).join('')}
+function toggle(k,v){state.checks[k]=v;save();renderPlan();renderToday()}
+function renderToday(){let d=new Date().getDay(),idx=d===0?6:d-1;let data=weekData(currentWeek);$('todayWorkout').innerHTML=`<div class="day-name">${days[idx]} · ${data[idx][0]}</div><p class="small">${data[idx][1]}</p><label class="small"><input type="checkbox" ${state.checks[`w${currentWeek}d${idx}`]?'checked':''} onchange="toggle('w${currentWeek}d${idx}',this.checked)"> Oznacz jako wykonane</label>`;$('todayLabel').textContent=days[idx].toUpperCase()}
+function refreshStats(){let done=Object.values(state.checks).filter(Boolean).length,total=24*7,pct=Math.round(done/total*100);$('doneCount').textContent=done;$('progressDone').textContent=done;$('percent').textContent=pct+'%';$('progressPct').textContent=pct+'%';$('mainBar').style.width=pct+'%';$('dayCount').textContent=Math.min(168,Math.floor((Date.now()-new Date(new Date().getFullYear(),0,1).getTime())/86400000)+1)}
+function resetToday(){let d=new Date().getDay(),idx=d===0?6:d-1;delete state.checks[`w${currentWeek}d${idx}`];save();renderToday();renderPlan()}
+function saveLog(){let item={date:new Date().toLocaleDateString('pl-PL'),weight:$('weight').value,memo:$('memo').value};state.logs.unshift(item);save();$('memo').value='';renderLogs()}
+function renderLogs(){$('log').innerHTML=(state.logs||[]).slice(0,8).map(x=>`<div class="task"><div><strong>${x.date}${x.weight?' · '+x.weight+' kg':''}</strong><div class="small">${escapeHtml(x.memo||'Bez notatki')}</div></div></div>`).join('')||'<div class="small">Brak zapisanych wpisów.</div>'}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('mountainTasks').innerHTML=['Sprawdź prognozę i komunikaty','Zapisz trasę offline','Spakuj wodę i jedzenie','Zabierz warstwy odzieży','Naładuj telefon i czołówkę'].map((x,i)=>`<label class="task"><input type="checkbox" onchange="this.parentElement.classList.toggle('done',this.checked)"><span>${x}</span></label>`).join('');
+$('today').textContent=new Date().toLocaleDateString('pl-PL',{weekday:'short',day:'numeric',month:'short'});renderPlan();renderToday();refreshStats();renderLogs();
+</script>
+</body>
+</html>
