@@ -166,6 +166,47 @@ section.page#body .pillar-hero p{font-size:12px;max-width:340px}
 #plan #days .exercise-actions .btn{padding:7px 9px}
 @media(min-width:700px){#plan .week-list{overflow-x:auto}#plan .week-list .week{flex-basis:52px;width:52px}}
 
+
+/* PATRAS BODY detail pass — calmer hierarchy and workout cards */
+#plan .section-head .eyebrow{font-size:9px;letter-spacing:2px}
+#plan .section-head .badge{font-size:8px;padding:5px 8px}
+#plan .plan-selector{position:relative;overflow:hidden}
+#plan .plan-selector:before{content:"";position:absolute;left:14px;top:0;width:46px;height:2px;background:var(--lime);opacity:.8}
+#plan .plan-selector .phase-track span{border-top-width:1px}
+#plan #weekTitle{font-size:25px;letter-spacing:-.8px}
+#plan .card[style*="margin-top:12px"]{background:#10161a;border-color:#293438;padding:13px 15px}
+#plan #programDaySummary{font-size:25px;line-height:1.15;letter-spacing:-1px}
+#plan #days .day{padding:0 14px 12px;overflow:hidden}
+#plan #days .day-top{margin:0 -14px;padding:13px 14px 10px;background:#151e22}
+#plan #days .day-name{font-size:14px;font-weight:800;letter-spacing:-.25px}
+#plan #days .day-date{font-size:9px;letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
+#plan #days .day>.small{font-size:11px;line-height:1.55;color:#aeb8b6;margin:10px 0 5px!important}
+#plan #days .exercise{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid #253035}
+#plan #days .exercise>div:first-child{min-width:0}
+#plan #days .exercise strong{font-size:12px;line-height:1.35}
+#plan #days .exercise small{font-size:10px;line-height:1.55;margin-top:3px}
+#plan #days .exercise-actions{display:flex;flex-direction:column;gap:5px;align-items:stretch}
+#plan #days .exercise-actions .btn{min-width:56px;padding:6px 8px;font-size:9px}
+#plan #days .exercise-actions .btn.primary{order:-1}
+#plan #days .result-history{font-size:9px;line-height:1.4;margin-top:5px}
+#plan #days .day>.actions{padding-top:9px;margin-top:8px!important;border-top:1px solid #263237}
+#plan #days .day>.actions .btn{font-size:9px}
+#plan #days .day>.actions label{font-size:9px;letter-spacing:.8px}
+#plan #days .day>.actions input{width:17px;height:17px}
+#plan .compare{gap:8px}
+#plan .compare .card{padding:12px}
+#plan .compare h3{font-size:14px;margin:8px 0}
+#plan .compare p{font-size:10px;line-height:1.5}
+#plan table{font-size:10px}
+#plan td,#plan th{padding:8px 5px}
+#plan .note{font-size:10px;line-height:1.55}
+@media(max-width:390px){
+ #plan #days .day{padding-left:11px;padding-right:11px}
+ #plan #days .day-top{margin-left:-11px;margin-right:-11px;padding-left:11px;padding-right:11px}
+ #plan #days .exercise{grid-template-columns:minmax(0,1fr) 54px;gap:6px}
+ #plan #days .exercise-actions .btn{min-width:0;padding:6px 4px}
+}
+
 </style>
 </head>
 <body>
