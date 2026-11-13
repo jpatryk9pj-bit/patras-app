@@ -67,6 +67,12 @@ input,select,textarea{border-radius:4px!important}
 
 /* PATRAS real expedition photography */
 .hero{background-image:linear-gradient(90deg,rgba(5,10,12,.91) 0%,rgba(5,10,12,.68) 48%,rgba(5,10,12,.18) 100%),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp');background-size:cover;background-position:center 48%;}
+
+/* PATRAS concept pass 01 — cinematic mobile home */
+.home-cover{min-height:510px;position:relative;overflow:hidden;border:1px solid #34413b;border-radius:5px;background:linear-gradient(180deg,rgba(3,8,10,.12) 0%,rgba(3,8,10,.08) 34%,rgba(3,8,10,.88) 75%,#080b0e 100%),url('https://raw.githubusercontent.com/jpatryk9pj-bit/patras-app/main/assets/expedition-06.webp') center 44%/cover;display:flex;flex-direction:column;justify-content:space-between;padding:18px}
+.home-topline{display:flex;justify-content:space-between;gap:8px;align-items:center}.home-live{font-size:9px;letter-spacing:1px;color:#d8e2d7}.home-copy{padding:140px 0 20px}.home-copy h1{font-size:clamp(38px,9vw,62px);line-height:.92;letter-spacing:-1.8px;font-weight:950;margin:8px 0}.home-copy p{font-size:12px;letter-spacing:1.4px;font-weight:800;color:#e4e9e3}.home-tags{display:flex;gap:7px;margin-top:14px}.home-tags span{font-size:9px;letter-spacing:1.5px;border:1px solid #ffffff70;background:#09110e88;padding:6px 9px;color:#f1f5ed}.home-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #ffffff55;padding-top:13px}.home-bottom>div:first-child{display:flex;align-items:center;gap:9px}.home-bottom strong{font-size:54px;line-height:1;color:var(--lime);letter-spacing:-3px}.home-bottom>div:first-child span{font-size:10px;line-height:1.2;font-weight:850}.home-day{width:48%;font-size:9px;letter-spacing:1px}.home-day b{display:block;font-size:15px;letter-spacing:0}.home-day .bar{height:5px;margin:5px 0}.home-day small{color:var(--lime)}.home-mission{display:flex;align-items:center;justify-content:space-between;padding:15px 2px;border-bottom:1px solid var(--line);margin-bottom:12px}.mission-name{font-weight:850;font-size:16px;margin:3px 0}.mission-go{width:40px;height:40px;border:0;border-radius:50%;background:var(--lime);color:#10150a;font-size:30px;line-height:1}.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 24px}.home-stat{padding:12px;background:#111820;border:1px solid #293640}.home-stat span{display:block;font-size:9px;letter-spacing:1px;color:var(--muted)}.home-stat b{font-size:22px;color:var(--lime)}.home-stat b small{font-size:10px;color:var(--muted)}.home-workout{border-radius:5px}
+@media(min-width:700px){.home-cover{min-height:560px}.home-copy{padding-top:180px}.home-cover{background-position:center 43%}}
+@media(max-width:390px){.home-cover{min-height:470px;padding:14px}.home-copy{padding-top:110px}.home-bottom strong{font-size:46px}}
 </style>
 </head>
 <body>
@@ -76,10 +82,19 @@ input,select,textarea{border-radius:4px!important}
 </div>
 <main class="wrap">
 <section class="page active" id="home">
-<div class="hero"><div class="eyebrow">PATRAS WILD EXPEDITION</div><h1>BUILT FOR THE<br>NEXT SUMMIT.</h1><p>Forma. Charakter. Wolność. Przygotuj ciało i głowę na kolejne wyzwanie — od codziennej dyscypliny po górski szczyt.</p><div class="hero-row"><span class="pill">BODY</span><span class="pill">MIND</span><span class="pill">MOUNTAIN</span><span class="pill">MISSION</span><span class="pill">GROWTH</span></div></div>
-<div class="grid"><div class="card"><div class="small">PROGRAM</div><div class="metric">24 <span>tygodnie</span></div><div class="small">Plan przygotowania</div></div><div class="card"><div class="small">DZIEŃ PROGRAMU</div><div class="metric" id="dayCount">1</div><div class="small">Nie odpuszczaj</div></div><div class="card"><div class="small">WYKONANE ZADANIA</div><div class="metric" id="doneCount">0</div><div class="small">Zaznaczone w planie</div></div><div class="card"><div class="small">POSTĘP</div><div class="metric" id="percent">0%</div><div class="bar"><i id="mainBar"></i></div></div></div>
+<div class="home-cover">
+<div class="home-topline"><span class="eyebrow">WILD EXPEDITION · 2026</span><span class="home-live">● YOUR JOURNEY</span></div>
+<div class="home-copy"><div class="eyebrow">NEXT SUMMIT</div><h1>PIC DE COMA<br>PEDROSA</h1><p>ANDORA&nbsp; | &nbsp;2 942 m</p><div class="home-tags"><span>BODY</span><span>MIND</span><span>MOUNTAIN</span></div></div>
+<div class="home-bottom"><div><strong>24</strong><span>TYGODNIE<br>PRZYGOTOWAŃ</span></div><div class="home-day"><span>DZIEŃ PROGRAMU</span><b id="dayCount">1 / 168</b><div class="bar"><i id="mainBar"></i></div><small id="percent">0%</small></div></div>
+</div>
+<div class="home-mission"><div><div class="eyebrow">DZISIEJSZA MISJA</div><div class="mission-name">TRENING — GÓRA CIAŁA</div><div class="small">◷ 50 min &nbsp; · &nbsp; ◉ około 380 kcal</div></div><button class="mission-go" onclick="go('plan')" aria-label="Przejdź do treningu">›</button></div>
+<div class="home-stats">
+<div class="home-stat"><span>PROGRAM</span><b>24 <small>tyg.</small></b></div>
+<div class="home-stat"><span>WYKONANE</span><b id="doneCount">0</b></div>
+<div class="home-stat"><span>CEL</span><b>2 942 <small>m</small></b></div>
+</div>
 <div class="section-head"><div><div class="eyebrow">Dzisiaj</div><h2>Twoja misja dnia</h2></div><span class="badge" id="todayLabel">START</span></div>
-<div class="card"><div id="todayWorkout"></div><div class="actions" style="margin-top:12px"><button class="btn primary" onclick="go('plan')">Otwórz plan treningowy</button><button class="btn" onclick="resetToday()">Reset dnia</button></div></div>
+<div class="card home-workout"><div id="todayWorkout"></div><div class="actions" style="margin-top:12px"><button class="btn primary" onclick="go('plan')">ROZPOCZNIJ TRENING&nbsp; →</button><button class="btn" onclick="resetToday()">Reset dnia</button></div></div>
 <div class="note">Plan jest bazowym programem ogólnorozwojowym, a nie oficjalnym programem selekcyjnym SPKP. Obciążenia dobieraj do techniki i aktualnej dyspozycji.</div>
 </section>
 <section class="page" id="plan">
