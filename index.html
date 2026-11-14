@@ -367,6 +367,30 @@ input[type="date"]{
 }
 input[type="date"]::-webkit-date-and-time-value{ text-align:left; }
 input[type="date"]::-webkit-calendar-picker-indicator{ opacity:.85; filter:invert(.85); }
+
+/* PATRAS baseline assessment — osobny, archiwizowany punkt startowy */
+.baseline-launch{display:grid;gap:12px;margin:18px 0;padding:18px;border:1px solid #60704b;background:linear-gradient(130deg,#17231d,#10171a);border-radius:8px}
+.baseline-launch h2{margin:5px 0;font-size:22px}
+.baseline-launch p{margin:0;max-width:560px}
+.baseline-launch .btn{width:100%;min-height:46px}
+#assessment .assessment-hero{background-position:center 45%;margin-bottom:14px}
+#assessment .baseline-banner{padding:16px;border:1px solid #536445;background:#141e18;border-radius:7px;margin:12px 0 14px}
+#assessment .baseline-banner strong{display:block;font-size:22px;letter-spacing:-.5px;margin-top:4px}
+#assessment .baseline-banner p{margin:5px 0 0}
+#assessment .baseline-card,#assessment .baseline-history{background:#11171b;border:1px solid #2b363a;border-radius:8px;padding:15px;margin:12px 0}
+#assessment .baseline-card .section-head{margin:0 0 12px;align-items:center}
+#assessment .baseline-card .section-head h2{font-size:19px;margin:3px 0}
+#assessment .baseline-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+#assessment .baseline-grid .wide{grid-column:1/-1}
+#assessment .baseline-grid label{display:block;font-size:10px;color:#aeb8b6;margin:0 0 5px}
+#assessment .baseline-grid input,#assessment .baseline-grid textarea{min-height:42px;font-size:13px}
+#assessment .baseline-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+#assessment .baseline-history-item{padding:12px 0;border-bottom:1px solid #293438}
+#assessment .baseline-history-item:last-child{border:0}
+#assessment .baseline-history-item strong{font-size:13px}
+#assessment .baseline-history-item .small{line-height:1.55;margin-top:4px}
+@media(min-width:700px){.baseline-launch{grid-template-columns:1fr auto;align-items:center}.baseline-launch .btn{width:auto}}
+@media(max-width:390px){#assessment .baseline-card,#assessment .baseline-history{padding:12px}#assessment .baseline-grid{gap:9px}}
 </style>
 </head>
 <body>
@@ -398,7 +422,68 @@ input[type="date"]::-webkit-calendar-picker-indicator{ opacity:.85; filter:inver
 <button class="pillar-card" onclick="go('food')"><span>02 / NUTRITION</span><b>Odżywianie</b><small>Posiłki, energia i makroskładniki</small><i>↗</i></button>
 <button class="pillar-card" onclick="go('progress')"><span>03 / BODY LAB</span><b>Pomiary i postępy</b><small>Wyniki, masa ciała i historia</small><i>↗</i></button>
 </div>
-<div class="note">Twój dotychczasowy program treningowy pozostaje bez zmian. Zmieniamy sposób dostępu i prezentacji, nie zawartość planu.</div>
+<div class="baseline-launch">
+<div><div class="eyebrow">OSOBNY MODUŁ · PUNKT ZERO</div><h2>Test startowy</h2><p class="small">Zapisz, od jakiego poziomu zaczynasz. Wyniki zostaną oddzielone od planu 24 tygodni i będą Twoim punktem odniesienia.</p></div>
+<button class="btn primary" onclick="go('assessment')">OTWÓRZ TEST STARTOWY →</button>
+</div>
+<div class="note">Plan 24 tygodni pozostaje bez zmian. Test startowy jest osobnym zapisem Twojej aktualnej sprawności.</div>
+</section>
+<section class="page" id="assessment">
+<div class="pillar-hero assessment-hero"><div class="eyebrow">BODY · BASELINE ASSESSMENT</div><h1>PUNKT<br>ZERO.</h1><p>Twoje wyniki przed rozpoczęciem przygotowań. Osobny zapis — nie zmienia planu 24 tygodni.</p></div>
+<div class="baseline-banner"><span class="eyebrow">TWÓJ PUNKT ODNIESIENIA</span><strong>TEST STARTOWY</strong><p class="small">Wykonuj sesje w różne dni. Zapisz rzeczywiste wyniki, nie próbuj niczego poprawiać na siłę.</p></div>
+<div class="card baseline-card">
+<div class="section-head"><div><div class="eyebrow">01 · POMIARY</div><h2>Parametry ciała</h2></div><span class="badge">Sesja 1</span></div>
+<div class="baseline-grid">
+<div><label for="baselineDate">Data rozpoczęcia testu</label><input id="baselineDate" type="date"></div>
+<div><label for="baselineWeight">Masa ciała (kg)</label><input id="baselineWeight" type="number" min="0" step=".1" placeholder="np. 110.0"></div>
+<div><label for="baselineHeight">Wzrost (cm)</label><input id="baselineHeight" type="number" min="0" step=".1" placeholder="np. 178"></div>
+<div><label for="baselineWaist">Pas na wysokości pępka (cm)</label><input id="baselineWaist" type="number" min="0" step=".1" placeholder="cm"></div>
+<div><label for="baselineChest">Klatka piersiowa (cm)</label><input id="baselineChest" type="number" min="0" step=".1" placeholder="cm"></div>
+<div><label for="baselineHips">Biodra (cm)</label><input id="baselineHips" type="number" min="0" step=".1" placeholder="cm"></div>
+<div><label for="baselineArm">Ramię (cm)</label><input id="baselineArm" type="number" min="0" step=".1" placeholder="cm"></div>
+<div><label for="baselineThigh">Udo (cm)</label><input id="baselineThigh" type="number" min="0" step=".1" placeholder="cm"></div>
+</div>
+</div>
+<div class="card baseline-card">
+<div class="section-head"><div><div class="eyebrow">02 · SIŁA</div><h2>Siła i wytrzymałość mięśniowa</h2></div><span class="badge">Sesja 2</span></div>
+<p class="small">Po rozgrzewce wykonaj jedną próbę każdego ćwiczenia. Zakończ, gdy technika zaczyna się pogarszać — nie wymuszaj powtórzeń.</p>
+<div class="baseline-grid">
+<div><label for="baselinePullups">Podciąganie — poprawne powtórzenia</label><input id="baselinePullups" type="number" min="0" step="1" placeholder="liczba"></div>
+<div><label for="baselinePushups">Pompki — poprawne powtórzenia</label><input id="baselinePushups" type="number" min="0" step="1" placeholder="liczba"></div>
+<div><label for="baselinePlank">Deska / plank (sekundy)</label><input id="baselinePlank" type="number" min="0" step="1" placeholder="sekundy"></div>
+<div><label for="baselineSquatNotes">Przysiad bez obciążenia — obserwacje</label><input id="baselineSquatNotes" type="text" placeholder="np. 10 powt., bez bólu"></div>
+</div>
+</div>
+<div class="card baseline-card">
+<div class="section-head"><div><div class="eyebrow">03 · BIEGANIE</div><h2>Próba 12-minutowa</h2></div><span class="badge">Sesja 3</span></div>
+<p class="small">Rozgrzewka 10 minut. Następnie przez 12 minut biegnij mocno, ale równym, kontrolowanym tempem. Jeśli nie możesz biec ciągle, przejdź do marszu i zapisz wynik. Na koniec spokojny marsz.</p>
+<div class="baseline-grid">
+<div><label for="baselineRun12">Dystans w 12 minut (metry)</label><input id="baselineRun12" type="number" min="0" step="1" placeholder="np. 1800"></div>
+<div><label for="baselineRunRpe">Odczuwalna trudność (1–10)</label><input id="baselineRunRpe" type="number" min="1" max="10" step="1" placeholder="1–10"></div>
+<div class="wide"><label for="baselineRunNotes">Uwagi do biegu</label><input id="baselineRunNotes" type="text" placeholder="np. marsz w 8. minucie, pogoda, samopoczucie"></div>
+</div>
+</div>
+<div class="card baseline-card">
+<div class="section-head"><div><div class="eyebrow">04 · PŁYWANIE</div><h2>200 metrów</h2></div><span class="badge">Sesja 4</span></div>
+<p class="small">Na basenie, w obecności ratownika. Najpierw spokojna rozgrzewka. Przepłyń 200 m w tempie, które pozwala utrzymać technikę. Zapisz czas i przerwy. Nie wykonuj prób pod wodą ani wstrzymywania oddechu.</p>
+<div class="baseline-grid">
+<div><label for="baselineSwim200">Czas na 200 m (mm:ss)</label><input id="baselineSwim200" type="text" placeholder="np. 05:30"></div>
+<div><label for="baselineSwimStyle">Styl / sposób wykonania</label><input id="baselineSwimStyle" type="text" placeholder="np. kraul, grzbiet, mieszany"></div>
+<div class="wide"><label for="baselineSwimNotes">Przerwy i uwagi</label><input id="baselineSwimNotes" type="text" placeholder="np. bez przerwy / 2 przerwy"></div>
+</div>
+</div>
+<div class="card baseline-card">
+<div class="section-head"><div><div class="eyebrow">05 · MOBILNOŚĆ</div><h2>Zakres ruchu</h2></div><span class="badge">Sesja 1</span></div>
+<p class="small">Sprawdź spokojnie: 10 przysiadów bez obciążenia, ruchomość kostki przy ścianie po obu stronach oraz uniesienie wyprostowanych ramion nad głowę. Zapisz ograniczenia lub dyskomfort — bez forsowania zakresu.</p>
+<div class="baseline-grid">
+<div><label for="baselineAnkleLeft">Kostka lewa — odległość od ściany (cm)</label><input id="baselineAnkleLeft" type="number" min="0" step=".1" placeholder="cm"></div>
+<div><label for="baselineAnkleRight">Kostka prawa — odległość od ściany (cm)</label><input id="baselineAnkleRight" type="number" min="0" step=".1" placeholder="cm"></div>
+<div class="wide"><label for="baselineMobilityNotes">Barki, biodra, przysiad — obserwacje</label><textarea id="baselineMobilityNotes" rows="3" placeholder="Opisz ograniczenia, asymetrie lub dyskomfort. Jeśli nic nie zauważasz, wpisz: bez uwag."></textarea></div>
+</div>
+</div>
+<div class="baseline-actions"><button class="btn primary" onclick="saveBaselineAssessment()">ZAPISZ PUNKT STARTOWY</button><button class="btn" onclick="clearBaselineForm()">WYCZYŚĆ FORMULARZ</button></div>
+<div class="card baseline-history"><div class="eyebrow">ARCHIWUM PUNKTU ZERO</div><h2>Historia zapisów</h2><p class="small">Każdy zapis zostaje osobno, dzięki czemu zachowasz pierwotne wyniki i zobaczysz kolejne pomiary obok nich.</p><div id="baselineHistory"></div></div>
+<div class="note">To diagnostyka ogólnej sprawności, nie oficjalny egzamin SPKP. Nie rób wszystkich prób jednego dnia. Zostaw co najmniej 48 godzin między wymagającymi sesjami, jeśli potrzebujesz regeneracji. Przerwij test przy bólu, zawrotach głowy, bólu w klatce lub nietypowej duszności.</div>
 </section>
 <section class="page" id="plan">
 <div class="pillar-hero plan-hero"><div class="eyebrow">BODY · TRAINING PROTOCOL</div><h1>24 WEEKS.<br>ONE MISSION.</h1><p>168 dni konsekwentnej pracy. Siła, wydolność i wytrzymałość budowane krok po kroku.</p><div class="plan-hero-meta"><span><b>24</b> TYGODNIE</span><span><b>168</b> DNI</span><span><b>01</b> CEL</span></div></div>
@@ -470,8 +555,8 @@ input[type="date"]::-webkit-calendar-picker-indicator{ opacity:.85; filter:inver
 <script>
 const $=id=>document.getElementById(id);
 const STORAGE='patras_app_v2';
-let state={checks:{},logs:[],recoveryLogs:[],nutritionTargets:{kcal:0,protein:0,carbs:0,fat:0},nutritionEntries:[],exercisePlans:{},workoutLogs:{},expeditions:[],programStart:new Date().toISOString().slice(0,10)};
-try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){};state.exercisePlans=state.exercisePlans||{};state.checks=state.checks||{};state.logs=state.logs||[];state.nutritionTargets=state.nutritionTargets||{kcal:0,protein:0,carbs:0,fat:0};state.nutritionEntries=state.nutritionEntries||[];state.recoveryLogs=state.recoveryLogs||[];state.workoutLogs=state.workoutLogs||{};state.expeditions=state.expeditions||[];state.mountainChecks=state.mountainChecks||{};state.programStart=state.programStart||new Date().toISOString().slice(0,10);
+let state={checks:{},logs:[],recoveryLogs:[],nutritionTargets:{kcal:0,protein:0,carbs:0,fat:0},nutritionEntries:[],exercisePlans:{},workoutLogs:{},expeditions:[],baselineAssessments:[],programStart:new Date().toISOString().slice(0,10)};
+try{state={...state,...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){};state.exercisePlans=state.exercisePlans||{};state.checks=state.checks||{};state.logs=state.logs||[];state.nutritionTargets=state.nutritionTargets||{kcal:0,protein:0,carbs:0,fat:0};state.nutritionEntries=state.nutritionEntries||[];state.recoveryLogs=state.recoveryLogs||[];state.workoutLogs=state.workoutLogs||{};state.expeditions=state.expeditions||[];state.baselineAssessments=state.baselineAssessments||[];state.mountainChecks=state.mountainChecks||{};state.programStart=state.programStart||new Date().toISOString().slice(0,10);
 const days=['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'];
 const phases=['Fundament ruchowy','Budowanie bazy','Rozwój siły','Rozwój wydolności','Wytrzymałość górska','Specyfika wysiłku','Konsolidacja','Taper i test'];
 const deloadWeeks=[4,8,12,16,20,23];
@@ -608,7 +693,7 @@ function weekData(w){
 }
 let currentWeek=1;
 function save(){localStorage.setItem(STORAGE,JSON.stringify(state));refreshStats()}
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));const parent=['plan','food','progress'].includes(id)?'body':id;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===parent));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan()}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));const parent=['plan','food','progress','assessment'].includes(id)?'body':id;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===parent));window.scrollTo({top:0,behavior:'smooth'});if(id==='plan')renderPlan();if(id==='assessment')renderAssessment()}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function renderWeeks(){ $('weeks').innerHTML=Array.from({length:24},(_,i)=>`<button class="week ${currentWeek===i+1?'active':''}" onclick="currentWeek=${i+1};renderPlan()">${String(i+1).padStart(2,'0')}</button>`).join('');const active=$('weeks').querySelector('.week.active');if(active)$('weeks').scrollLeft=Math.max(0,active.offsetLeft-$('weeks').offsetLeft-($('weeks').clientWidth-active.offsetWidth)/2)}
 function renderPlan(){renderWeeks();$('weekNo').textContent=currentWeek;$('weekTitle').textContent=currentWeek===24?'Finisz i sprawdzenie':phases[Math.min(7,Math.floor((currentWeek-1)/3))];$('phase').textContent=`Etap: ${$('weekTitle').textContent}. ${[4,8,12,16,20,23].includes(currentWeek)?'Tydzień lżejszy — zmniejsz objętość o około 30–40%.':'Zwiększaj obciążenie tylko wtedy, gdy technika i regeneracja są dobre.'}`;
@@ -648,6 +733,44 @@ function resetToday(){let d=new Date().getDay(),idx=d===0?6:d-1;delete state.che
 function saveExpedition(){const name=$('tripName').value.trim();if(!name){alert('Wpisz nazwę wyprawy.');return}state.expeditions.unshift({id:Date.now(),name,date:$('tripDate').value||new Date().toISOString().slice(0,10),distance:$('tripDistance').value,gain:$('tripGain').value,time:$('tripTime').value,note:$('tripNote').value.trim()});save();['tripName','tripDate','tripDistance','tripGain','tripTime','tripNote'].forEach(id=>$(id).value='');renderExpeditions()}
 function deleteExpedition(id){if(!confirm('Usunąć ten wpis wyprawy?'))return;state.expeditions=state.expeditions.filter(x=>x.id!==id);save();renderExpeditions()}
 function renderExpeditions(){$('expeditionList').innerHTML=state.expeditions.map(x=>`<div class="expedition"><div class="day-top"><strong>${escapeHtml(x.name)}</strong><button class="btn tiny" onclick="deleteExpedition(${x.id})">Usuń</button></div><div class="small">${escapeHtml(x.date)} · ${x.distance?escapeHtml(x.distance)+' km':''} ${x.gain?'· '+escapeHtml(x.gain)+' m przewyższenia':''} ${x.time?'· '+escapeHtml(x.time)+' h':''}</div>${x.note?`<div class="small">${escapeHtml(x.note)}</div>`:''}</div>`).join('')||'<div class="small">Nie zapisano jeszcze wypraw.</div>'}
+
+const baselineFields=[
+ ['baselineWeight','Masa ciała','kg'],['baselineHeight','Wzrost','cm'],['baselineWaist','Pas','cm'],['baselineChest','Klatka piersiowa','cm'],['baselineHips','Biodra','cm'],['baselineArm','Ramię','cm'],['baselineThigh','Udo','cm'],
+ ['baselinePullups','Podciąganie','powt.'],['baselinePushups','Pompki','powt.'],['baselinePlank','Plank','sek.'],['baselineSquatNotes','Przysiad — obserwacje',''],
+ ['baselineRun12','Bieg 12 min','m'],['baselineRunRpe','Trudność biegu','/10'],['baselineRunNotes','Uwagi do biegu',''],
+ ['baselineSwim200','Pływanie 200 m',''],['baselineSwimStyle','Styl pływania',''],['baselineSwimNotes','Uwagi do pływania',''],
+ ['baselineAnkleLeft','Kostka lewa','cm'],['baselineAnkleRight','Kostka prawa','cm'],['baselineMobilityNotes','Mobilność — obserwacje','']
+];
+function renderAssessment(){
+ const latest=(state.baselineAssessments||[])[0];
+ $('baselineDate').value=latest?.date||new Date().toISOString().slice(0,10);
+ baselineFields.forEach(([id])=>{const el=$(id);if(el)el.value=latest?.values?.[id]??''});
+ renderBaselineHistory();
+}
+function saveBaselineAssessment(){
+ const values={};let count=0;
+ baselineFields.forEach(([id])=>{const el=$(id);const value=el?.value?.trim()||'';values[id]=value;if(value!=='')count++});
+ if(!count){alert('Wpisz przynajmniej jeden wynik przed zapisaniem.');return}
+ for(const [id,label] of baselineFields){const el=$(id);if(el&&el.type==='number'&&el.value!==''&&Number(el.value)<0){alert('Sprawdź pole: '+label+'. Wynik nie może być ujemny.');el.focus();return}}
+ const date=$('baselineDate').value||new Date().toISOString().slice(0,10);
+ state.baselineAssessments=state.baselineAssessments||[];
+ state.baselineAssessments.unshift({id:Date.now(),date,values});
+ save();renderBaselineHistory();
+ alert('Punkt startowy został zapisany w osobnym archiwum BODY.');
+}
+function clearBaselineForm(){
+ if(!confirm('Wyczyścić pola formularza? Zapisane wyniki pozostaną w archiwum.'))return;
+ $('baselineDate').value=new Date().toISOString().slice(0,10);
+ baselineFields.forEach(([id])=>{const el=$(id);if(el)el.value=''});
+}
+function renderBaselineHistory(){
+ const history=(state.baselineAssessments||[]);
+ $('baselineHistory').innerHTML=history.length?history.slice(0,8).map((entry,index)=>{
+  const completed=baselineFields.filter(([id])=>(entry.values?.[id]||'')!=='').length;
+  const detail=baselineFields.filter(([id])=>(entry.values?.[id]||'')!=='').map(([id,label,unit])=>label+': '+entry.values[id]+(unit?' '+unit:'')).join(' · ');
+  return '<div class="baseline-history-item"><strong>'+(index===0?'OSTATNI ZAPIS · ':'ZAPIS · ')+escapeHtml(entry.date)+'</strong><div class="small">'+completed+'/'+baselineFields.length+' pól uzupełnionych</div><div class="small">'+escapeHtml(detail)+'</div></div>';
+ }).join(''):'<div class="small">Nie zapisano jeszcze punktu startowego. Uzupełnij pomiary i wyniki po kolejnych sesjach testowych.</div>';
+}
 function saveRecovery(){const sleep=$('recoverySleep').value,energy=$('recoveryEnergy').value,soreness=$('recoverySoreness').value,stress=$('recoveryStress').value;if(!sleep&&!energy&&!soreness&&!stress&&!$('recoveryNote').value.trim()){alert('Uzupełnij przynajmniej jedno pole.');return}if(sleep!==''&&(Number(sleep)<0||Number(sleep)>24)){alert('Sen wpisz w zakresie 0–24 godzin.');return}state.recoveryLogs.unshift({date:new Date().toLocaleString('pl-PL'),timestamp:Date.now(),sleep,energy,soreness,stress,note:$('recoveryNote').value.trim()});state.recoveryLogs=state.recoveryLogs.slice(0,60);save();['recoverySleep','recoveryEnergy','recoverySoreness','recoveryStress','recoveryNote'].forEach(id=>$(id).value='');renderRecovery()}
 function renderRecovery(){$('recoveryHistory').innerHTML=(state.recoveryLogs||[]).slice(0,7).map(x=>`<div class="recovery-history-item"><strong>${escapeHtml(x.date)}</strong><div class="recovery-values">${x.sleep!==''?`<span>Sen: ${escapeHtml(x.sleep)} h</span>`:''}${x.energy?`<span>Energia: ${escapeHtml(x.energy)}/5</span>`:''}${x.soreness?`<span>Mięśnie: ${escapeHtml(x.soreness)}/5</span>`:''}${x.stress?`<span>Stres: ${escapeHtml(x.stress)}/5</span>`:''}</div>${x.note?`<div class="small" style="margin-top:5px">${escapeHtml(x.note)}</div>`:''}</div>`).join('')||'<div class="small">Nie ma jeszcze check-inów. Dodaj pierwszy zapis powyżej.</div>'}
 function localFoodDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
